@@ -1,0 +1,7 @@
+# robots.txt for VibeFlash (https://vibe-flash.netlify.app/)
+# Allow all crawlers to index all pages.
+
+User-agent: *
+Allow: /
+
+# Sitemap: https://vibe-flash.netlify.app/sitemap.xml
