@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="VibeFlash Privacy Policy – learn how VibeFlash handles (or rather, doesn't handle) your data." />
+  <title>Privacy Policy – VibeFlash</title>
+
+  <!-- Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── CSS Variables ───────────────────────────── */
+    :root {
+      --bg:           #FAFAFA;
+      --bg-card:      #FFFFFF;
+      --bg-subtle:    #F4F4F5;
+      --text:         #111111;
+      --text-muted:   #6B7280;
+      --text-faint:   #9CA3AF;
+      --border:       #E5E5E5;
+      --border-faint: rgba(0,0,0,0.06);
+      --accent:       #3B82F6;
+      --accent-hover: #2563EB;
+      --shadow:       0 1px 3px rgba(0,0,0,0.05), 0 0 0 1px rgba(0,0,0,0.06);
+      --radius:       24px;
+      --grad-via:     #D1D5DB;
+      --tag-bg:       #F3F4F6;
+      --tag-text:     #374151;
+      --green-bg:     #F0FDF4;
+      --green-border: #BBF7D0;
+      --green-text:   #166534;
+      --blue-bg:      #EFF6FF;
+      --blue-border:  #BFDBFE;
+      --blue-text:    #1E40AF;
+    }
+    html.dark {
+      --bg:           #0A0A0A;
+      --bg-card:      #111111;
+      --bg-subtle:    #1A1A1A;
+      --text:         #EDEDED;
+      --text-muted:   #9CA3AF;
+      --text-faint:   #6B7280;
+      --border:       #272727;
+      --border-faint: rgba(255,255,255,0.06);
+      --accent:       #60A5FA;
+      --accent-hover: #93C5FD;
+      --shadow:       0 1px 3px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.06);
+      --grad-via:     #374151;
+      --tag-bg:       #1F2937;
+      --tag-text:     #D1D5DB;
+      --green-bg:     #022C22;
+      --green-border: #064E3B;
+      --green-text:   #6EE7B7;
+      --blue-bg:      #0C1A2E;
+      --blue-border:  #1E3A5F;
+      --blue-text:    #93C5FD;
+    }
+
+    /* ── Reset & Base ────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+      font-size: 16px;
+      background-color: var(--bg);
+      color: var(--text);
+      transition: background-color 0.3s ease, color 0.3s ease;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: color 0.18s ease;
+    }
+    a:hover { color: var(--accent-hover); }
+
+    /* ── Top gradient bar ────────────────────────── */
+    .top-bar {
+      height: 2px;
+      width: 100%;
+      background: linear-gradient(to right, transparent, var(--grad-via), transparent);
+      flex-shrink: 0;
+    }
+
+    /* ── Navbar ──────────────────────────────────── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+      height: 56px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+    }
+    .nav-logo svg { flex-shrink: 0; }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .nav-link {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 0.375rem 0.625rem;
+      border-radius: 8px;
+      transition: color 0.18s ease, background 0.18s ease;
+    }
+    .nav-link:hover {
+      color: var(--text);
+      background: var(--bg-subtle);
+    }
+    .nav-link.active {
+      color: var(--text);
+      background: var(--bg-subtle);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* ── Theme toggle ────────────────────────────── */
+    #theme-toggle {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease, transform 0.15s ease;
+      flex-shrink: 0;
+    }
+    #theme-toggle:hover {
+      background: var(--bg-subtle);
+      color: var(--text);
+      transform: scale(1.05);
+    }
+    #theme-toggle svg { width: 16px; height: 16px; }
+
+    /* ── Page layout ─────────────────────────────── */
+    .page-wrapper {
+      flex: 1;
+      width: 100%;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 4rem;
+    }
+
+    /* ── Hero / Privacy Summary Card ─────────────── */
+    .summary-card {
+      background: var(--green-bg);
+      border: 1px solid var(--green-border);
+      border-radius: 20px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 2.5rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+    .summary-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: var(--green-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .summary-content h2 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--green-text);
+      margin-bottom: 0.4rem;
+    }
+    .summary-content p {
+      font-size: 0.83rem;
+      color: var(--green-text);
+      line-height: 1.7;
+      opacity: 0.85;
+    }
+
+    /* ── Page header ─────────────────────────────── */
+    .page-header { margin-bottom: 2.5rem; }
+
+    .page-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 0.75rem;
+    }
+    .page-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 16px;
+      height: 1px;
+      background: var(--text-faint);
+    }
+
+    .page-title {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+
+    .page-meta {
+      font-size: 0.82rem;
+      color: var(--text-faint);
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .page-meta span {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    /* ── Divider ─────────────────────────────────── */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── TOC ─────────────────────────────────────── */
+    .toc {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+    .toc-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 0.75rem;
+    }
+    .toc ol {
+      list-style: none;
+      counter-reset: toc-counter;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    .toc ol li {
+      counter-increment: toc-counter;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .toc ol li::before {
+      content: counter(toc-counter, decimal-leading-zero);
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-faint);
+      min-width: 22px;
+      font-variant-numeric: tabular-nums;
+    }
+    .toc ol li a {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+    .toc ol li a:hover { color: var(--text); }
+
+    /* ── Sections ────────────────────────────────── */
+    .section {
+      margin-bottom: 2.5rem;
+      scroll-margin-top: 80px;
+    }
+
+    .section-number {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 0.35rem;
+      display: block;
+    }
+
+    .section-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: -0.015em;
+      color: var(--text);
+      margin-bottom: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .section-body {
+      font-size: 0.9rem;
+      line-height: 1.8;
+      color: var(--text-muted);
+    }
+    .section-body p { margin-bottom: 0.9rem; }
+    .section-body p:last-child { margin-bottom: 0; }
+    .section-body strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+    .section-body ul, .section-body ol {
+      padding-left: 1.25rem;
+      margin-bottom: 0.9rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .section-body li { font-size: 0.88rem; line-height: 1.7; }
+
+    /* ── Flow diagram (data stays local) ────────── */
+    .data-flow {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin: 1.25rem 0;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .data-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.75rem 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      flex: 1;
+      min-width: 100px;
+      text-align: center;
+    }
+    .data-node-icon {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+    }
+    .data-node-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .data-node-sub {
+      font-size: 0.65rem;
+      color: var(--text-faint);
+    }
+    .data-arrow {
+      color: var(--text-faint);
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    /* ── Info card ───────────────────────────────── */
+    .info-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.25rem 1.5rem;
+      margin-top: 1rem;
+    }
+    .info-card-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 0.5rem;
+    }
+    .info-card p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    /* ── Blue info box ───────────────────────────── */
+    .info-box {
+      background: var(--blue-bg);
+      border: 1px solid var(--blue-border);
+      border-radius: 14px;
+      padding: 1rem 1.25rem;
+      margin: 1rem 0;
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+    }
+    .info-box-icon { flex-shrink: 0; margin-top: 2px; }
+    .info-box p {
+      font-size: 0.83rem;
+      line-height: 1.7;
+      color: var(--blue-text) !important;
+      margin: 0 !important;
+    }
+    .info-box strong { color: var(--blue-text) !important; }
+
+    /* ── Checklist ───────────────────────────────── */
+    .checklist {
+      list-style: none !important;
+      padding-left: 0 !important;
+    }
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .checklist li:last-child { border-bottom: none; }
+    .check-icon {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--green-bg);
+      border: 1px solid var(--green-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .check-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    .check-label strong { color: var(--text); font-weight: 600; }
+
+    /* ── Footer ──────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 1.5rem;
+      text-align: center;
+    }
+    .footer-inner {
+      max-width: 760px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      align-items: center;
+    }
+    .footer-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .footer-links a {
+      font-size: 0.78rem;
+      color: var(--text-faint);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: var(--text-muted); }
+    .footer-copy {
+      font-size: 0.75rem;
+      color: var(--text-faint);
+    }
+    .footer-dot {
+      display: inline-block;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: var(--text-faint);
+      margin: 0 0.3rem;
+      vertical-align: middle;
+    }
+
+    /* ── Responsive ──────────────────────────────── */
+    @media (max-width: 540px) {
+      .page-title { font-size: 1.55rem; }
+      .page-wrapper { padding: 2rem 1rem 3rem; }
+      nav { padding: 0 1rem; }
+      .summary-card { flex-direction: column; }
+      .data-flow { flex-direction: column; }
+      .data-arrow { transform: rotate(90deg); }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Top gradient bar -->
+  <div class="top-bar"></div>
+
+  <!-- Navbar -->
+  <nav>
+    <a href="/" class="nav-logo">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+      </svg>
+      VibeFlash
+    </a>
+    <div class="nav-links">
+      <a href="/" class="nav-link">Home</a>
+      <a href="app.html" class="nav-link">App</a>
+      <a href="terms-of-use.html" class="nav-link">Terms</a>
+      <a href="privacy-policy.html" class="nav-link active">Privacy</a>
+    </div>
+    <div class="nav-right">
+      <button id="theme-toggle" aria-label="Toggle dark mode">
+        <svg id="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+          <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+        <svg id="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Page content -->
+  <div class="page-wrapper">
+
+    <!-- Header -->
+    <header class="page-header">
+      <div class="page-eyebrow">Legal</div>
+      <h1 class="page-title">Privacy Policy</h1>
+      <div class="page-meta">
+        <span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Effective: January 1, 2026
+        </span>
+        <span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          ~4 min read
+        </span>
+        <span>
+          <a href="terms-of-use.html" style="font-size:0.82rem; color: var(--text-faint);">Also see: Terms of Use →</a>
+        </span>
+      </div>
+    </header>
+
+    <!-- Privacy summary card -->
+    <div class="summary-card">
+      <div class="summary-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--green-text);">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        </svg>
+      </div>
+      <div class="summary-content">
+        <h2>The short version: we collect nothing.</h2>
+        <p>VibeFlash has no backend, no analytics, no cookies, and no user accounts. Everything stays in your browser. We literally cannot see your data because it never reaches us. This policy explains the technical specifics of how that works.</p>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Table of Contents -->
+    <div class="toc">
+      <div class="toc-title">Table of Contents</div>
+      <ol>
+        <li><a href="#no-collection">No Data Collection</a></li>
+        <li><a href="#local-storage">Local Storage (IndexedDB)</a></li>
+        <li><a href="#third-party">Third-Party API (OpenRouter)</a></li>
+        <li><a href="#no-personal-info">No Personal Information</a></li>
+        <li><a href="#childrens">Children's Privacy</a></li>
+        <li><a href="#changes">Changes to Policy</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <section class="section" id="no-collection">
+      <span class="section-number">Section 01</span>
+      <h2 class="section-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-faint);flex-shrink:0;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        No Data Collection
+      </h2>
+      <div class="section-body">
+        <p>VibeFlash does not collect, transmit, store, or process any of your data on our servers — because <strong>we don't have any servers</strong> that receive user data.</p>
+
+        <ul class="checklist">
+          <li>
+            <span class="check-icon">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="color:var(--green-text);"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            <span class="check-label"><strong>No cookies.</strong> We do not set any first-party or third-party cookies.</span>
+          </li>
+          <li>
+            <span class="check-icon">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="color:var(--green-text);"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            <span class="check-label"><strong>No analytics.</strong> We do not use Google Analytics, Mixpanel, Plausible, or any other analytics service.</span>
+          </li>
+          <li>
+            <span class="check-icon">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="color:var(--green-text);"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            <span class="check-label"><strong>No server-side logs of user activity.</strong> Netlify may log standard HTTP access data (IP addresses, timestamps) as part of its hosting infrastructure — this is governed by <a href="https://www.netlify.com/privacy/" target="_blank" rel="noopener noreferrer">Netlify's Privacy Policy</a>.</span>
+          </li>
+          <li>
+            <span class="check-icon">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="color:var(--green-text);"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            <span class="check-label"><strong>No tracking pixels or fingerprinting.</strong> We do not embed any invisible tracking technology.</span>
+          </li>
+          <li>
+            <span class="check-icon">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="color:var(--green-text);"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            <span class="check-label"><strong>No advertising.</strong> VibeFlash displays no ads and shares no data with ad networks.</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Section 2 -->
+    <section class="section" id="local-storage">
+      <span class="section-number">Section 02</span>
+      <h2 class="section-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-faint);flex-shrink:0;"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        Local Storage (IndexedDB)
+      </h2>
+      <div class="section-body">
+        <p>All data created within VibeFlash is stored exclusively in your browser using the <strong>IndexedDB</strong> Web API — a structured local database built into every modern browser.</p>
+        <p>The following data is stored locally in your browser and <strong>nowhere else</strong>:</p>
+        <ul>
+          <li><strong>Flashcard decks</strong> — names and creation timestamps</li>
+          <li><strong>Flashcards</strong> — front text (question), back text (answer), ordering</li>
+          <li><strong>OpenRouter API key</strong> — if you choose to use AI generation (see Section 3)</li>
+          <li><strong>App preferences</strong> — such as your preferred color theme (dark/light mode), stored via <code style="font-family:monospace;font-size:0.82em;background:var(--bg-subtle);padding:1px 5px;border-radius:5px;">localStorage</code></li>
+        </ul>
+
+        <div class="data-flow">
+          <div class="data-node">
+            <div class="data-node-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </div>
+            <div class="data-node-label">Your Browser</div>
+            <div class="data-node-sub">All data lives here</div>
+          </div>
+          <div class="data-arrow">→</div>
+          <div class="data-node">
+            <div class="data-node-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+            </div>
+            <div class="data-node-label">IndexedDB</div>
+            <div class="data-node-sub">Decks, cards, key</div>
+          </div>
+          <div class="data-arrow">✕</div>
+          <div class="data-node" style="opacity:0.45; border-style: dashed;">
+            <div class="data-node-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+            </div>
+            <div class="data-node-label">VibeFlash Server</div>
+            <div class="data-node-sub">Does not exist</div>
+          </div>
+        </div>
+
+        <p><strong>Important:</strong> Because data is stored locally, it is tied to the specific browser and device you are using. Clearing your browser's site data, or using a different browser or device, will result in the loss of your locally stored flashcards. We strongly encourage you to periodically export or copy important content.</p>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Section 3 -->
+    <section class="section" id="third-party">
+      <span class="section-number">Section 03</span>
+      <h2 class="section-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-faint);flex-shrink:0;"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        Third-Party API (OpenRouter)
+      </h2>
+      <div class="section-body">
+        <p>The AI flashcard generation feature is entirely optional. If you choose to use it, here is exactly what happens:</p>
+        <ol>
+          <li>You supply your own OpenRouter API key, which is saved to your browser's IndexedDB.</li>
+          <li>When you click "Generate Flashcards," your browser makes a direct HTTPS request <strong>from your device to OpenRouter's API endpoint</strong> (<code style="font-family:monospace;font-size:0.82em;background:var(--bg-subtle);padding:1px 5px;border-radius:5px;">api.openrouter.ai</code>), including a portion of your extracted PDF text and your API key.</li>
+          <li>OpenRouter processes the request using the AI model you selected and returns the generated flashcards.</li>
+          <li>VibeFlash stores the returned flashcards in your browser's IndexedDB.</li>
+        </ol>
+
+        <div class="info-box">
+          <svg class="info-box-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--blue-text);"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <p><strong>We never see it.</strong> The creator of VibeFlash does not receive, log, intercept, or store any data from your OpenRouter API calls — not your API key, not your PDF text, not the AI response. The request goes directly from your browser to OpenRouter.</p>
+        </div>
+
+        <p>By using the AI generation feature, you agree to <a href="https://openrouter.ai/terms" target="_blank" rel="noopener noreferrer">OpenRouter's Terms of Service</a> and <a href="https://openrouter.ai/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>, which govern how they handle data sent to their API. Please review those documents to understand how OpenRouter processes your information.</p>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Section 4 -->
+    <section class="section" id="no-personal-info">
+      <span class="section-number">Section 04</span>
+      <h2 class="section-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-faint);flex-shrink:0;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        No Personal Information
+      </h2>
+      <div class="section-body">
+        <p>VibeFlash does not ask for, require, or store any personally identifiable information (PII). Specifically:</p>
+        <ul>
+          <li><strong>No name.</strong> We do not ask for your name anywhere in the app.</li>
+          <li><strong>No email address.</strong> There is no registration, sign-up, or mailing list.</li>
+          <li><strong>No phone number.</strong> Not required or collected.</li>
+          <li><strong>No payment information.</strong> VibeFlash is free. We do not process payments.</li>
+          <li><strong>No location data.</strong> We do not request or access your geographic location.</li>
+          <li><strong>No device fingerprinting.</strong> We do not collect browser version, screen resolution, hardware identifiers, or similar data for tracking purposes.</li>
+        </ul>
+        <p>The only data in the system is what <strong>you explicitly create</strong>: your flashcard content. And it lives only on your device.</p>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Section 5 -->
+    <section class="section" id="childrens">
+      <span class="section-number">Section 05</span>
+      <h2 class="section-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-faint);flex-shrink:0;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Children's Privacy
+      </h2>
+      <div class="section-body">
+        <p>VibeFlash is a general-purpose study tool suitable for users of all ages. Because we collect no personal information from anyone, we do not knowingly collect personal information from children under the age of 13 (or the applicable minimum age in your jurisdiction).</p>
+        <p>If you are a parent or guardian and believe your child has somehow shared personal data through VibeFlash, please be aware that VibeFlash has no mechanism to receive such data — all content remains local to the browser. There is no information for us to delete from our systems, because none exists on our end.</p>
+        <p>If you have concerns, feel free to contact us at the address in Section 7, and we will clarify any aspect of how the app works.</p>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Section 6 -->
+    <section class="section" id="changes">
+      <span class="section-number">Section 06</span>
+      <h2 class="section-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-faint);flex-shrink:0;"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+        Changes to Policy
+      </h2>
+      <div class="section-body">
+        <p>We reserve the right to update this Privacy Policy at any time to reflect changes in the app's functionality, legal requirements, or third-party services we rely on (e.g., Netlify's hosting). When changes occur, we will update the <strong>"Effective" date</strong> at the top of this page.</p>
+        <p>Since we do not collect email addresses, we cannot notify you of changes directly. We encourage you to review this page periodically. Continued use of VibeFlash after changes are posted constitutes your acceptance of the updated policy.</p>
+        <div class="info-card">
+          <div class="info-card-title">Current Version</div>
+          <p>This Privacy Policy was last updated on <strong>May 21, 2026</strong>. Previous versions are not archived publicly, but you can always <a href="#contact">contact us</a> if you have questions about historical practices.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Section 7 -->
+    <section class="section" id="contact">
+      <span class="section-number">Section 07</span>
+      <h2 class="section-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-faint);flex-shrink:0;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Contact
+      </h2>
+      <div class="section-body">
+        <p>If you have any questions about this Privacy Policy or how VibeFlash handles data, please don't hesitate to reach out. We're happy to explain the technical architecture in more detail.</p>
+        <div class="info-card">
+          <div class="info-card-title">Get in Touch</div>
+          <p>
+            Email: <a href="mailto:hello@vibeflash.example"><strong>fk.jarif@gmail.com</strong></a><br />
+            We aim to respond within 5 business days. Since VibeFlash stores no user data on our end, we cannot assist with data recovery from your browser's local storage — that data is controlled entirely by you.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /page-wrapper -->
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-links">
+        <a href="/">Home</a>
+        <a href="app.html">App</a>
+        <a href="terms-of-use.html">Terms of Use</a>
+        <a href="privacy-policy.html">Privacy Policy</a>
+      </div>
+      <p class="footer-copy">
+        © 2026 Faizul Karim Jarif. All rights reserved.
+        <span class="footer-dot"></span>
+        Static site, hosted on Netlify.
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // ── Theme ──────────────────────────────────────────────
+    const html   = document.documentElement;
+    const toggle = document.getElementById('theme-toggle');
+    const sun    = document.getElementById('icon-sun');
+    const moon   = document.getElementById('icon-moon');
+
+    function applyTheme(dark) {
+      html.classList.toggle('dark', dark);
+      sun.style.display  = dark ? 'block' : 'none';
+      moon.style.display = dark ? 'none'  : 'block';
+    }
+
+    const stored  = localStorage.getItem('vf-theme');
+    const sysDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    applyTheme(stored ? stored === 'dark' : sysDark);
+
+    toggle.addEventListener('click', () => {
+      const isDark = !html.classList.contains('dark');
+      localStorage.setItem('vf-theme', isDark ? 'dark' : 'light');
+      applyTheme(isDark);
+    });
+
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+      if (!localStorage.getItem('vf-theme')) applyTheme(e.matches);
+    });
+  </script>
+</body>
+</html>

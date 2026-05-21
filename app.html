@@ -1,0 +1,1546 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VibeFlash — Flashcards</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dexie@4/dist/dexie.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
+
+  <style type="text/tailwindcss">
+    @theme {
+      --font-sans: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+    }
+  </style>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    :root {
+      --bg: #ffffff;
+      --surface: #ffffff;
+      --surface2: #f5f5f5;
+      --border: #e5e5e5;
+      --text: #111111;
+      --text-muted: #737373;
+      --primary-bg: #111111;
+      --primary-fg: #ffffff;
+      --primary-hover: #000000;
+      --accent: #3b82f6;
+      --sidebar-w: 280px;
+    }
+
+    html.dark {
+      --bg: #000000;
+      --surface: #0a0a0a;
+      --surface2: #111111;
+      --border: #1a1a1a;
+      --text: #ededed;
+      --text-muted: #a3a3a3;
+      --primary-bg: #ffffff;
+      --primary-fg: #000000;
+      --primary-hover: #e5e5e5;
+      --accent: #60a5fa;
+    }
+
+    .hidden { display: none !important; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      transition: background 0.2s, color 0.2s;
+      overflow-x: hidden;
+    }
+
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
+
+    #app { display: flex; height: 100vh; overflow: hidden; }
+
+    #sidebar {
+      width: var(--sidebar-w);
+      min-width: var(--sidebar-w);
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.25s ease;
+      z-index: 40;
+      overflow: hidden;
+    }
+
+    #main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background: var(--bg);
+    }
+
+    #topbar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 20px;
+      height: 56px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+      flex-shrink: 0;
+    }
+
+    .sidebar-header {
+      padding: 16px 16px 12px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    .deck-list { flex: 1; overflow-y: auto; padding: 8px; }
+
+    .deck-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.15s;
+      user-select: none;
+    }
+    .deck-item:hover { background: var(--surface2); }
+    .deck-item.active { background: var(--primary-bg); color: var(--primary-fg); }
+    .deck-item.active .deck-count { color: var(--primary-fg); opacity: 0.6; }
+
+    .deck-name { flex: 1; font-size: 14px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .deck-count { font-size: 12px; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+
+    .sidebar-footer {
+      padding: 12px;
+      border-top: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: background 0.15s, opacity 0.15s;
+      white-space: nowrap;
+      font-family: inherit;
+    }
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .btn-primary {
+      background: var(--primary-bg);
+      color: var(--primary-fg);
+    }
+    .btn-primary:hover:not(:disabled) { background: var(--primary-hover); }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-ghost:hover:not(:disabled) { background: var(--surface2); }
+
+    .btn-danger {
+      background: #ef4444;
+      color: #fff;
+    }
+    .btn-danger:hover:not(:disabled) { background: #dc2626; }
+
+    .btn-icon {
+      padding: 6px;
+      border-radius: 8px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s, color 0.15s;
+      font-family: inherit;
+    }
+    .btn-icon:hover { background: var(--surface2); color: var(--text); }
+    .btn-icon:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+    .btn-sm { padding: 5px 10px; font-size: 12px; }
+
+    .card-scene {
+      perspective: 1000px;
+      width: 100%;
+      max-width: 680px;
+      aspect-ratio: 16/9;
+      margin: 0 auto;
+      cursor: pointer;
+    }
+
+    .card-3d {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .card-3d.flipped { transform: rotateY(180deg); }
+
+    .card-face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+      text-align: center;
+    }
+
+    .card-face-back {
+      transform: rotateY(180deg);
+      background: var(--surface2);
+    }
+
+    .card-label {
+      position: absolute;
+      top: 16px;
+      left: 20px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .card-actions {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      display: flex;
+      gap: 4px;
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+    .card-scene:hover .card-actions { opacity: 1; }
+
+    .card-text {
+      font-size: clamp(16px, 2.5vw, 24px);
+      font-weight: 500;
+      line-height: 1.5;
+      color: var(--text);
+      max-height: 70%;
+      overflow-y: auto;
+      width: 100%;
+    }
+
+    #progress-track {
+      height: 3px;
+      background: var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+      flex: 1;
+    }
+    #progress-fill {
+      height: 100%;
+      background: var(--primary-bg);
+      border-radius: 2px;
+      transition: width 0.3s ease;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .modal-backdrop.open { opacity: 1; pointer-events: all; }
+
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 520px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 24px;
+      transform: translateY(8px);
+      transition: transform 0.2s;
+    }
+    .modal-backdrop.open .modal { transform: translateY(0); }
+
+    .modal-lg { max-width: 680px; }
+
+    .modal-title {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.15s;
+      resize: vertical;
+    }
+    .form-input:focus { border-color: var(--accent); }
+    .form-input::placeholder { color: var(--text-muted); }
+
+    select.form-input { cursor: pointer; }
+
+    #toast-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      pointer-events: none;
+    }
+
+    .toast {
+      padding: 11px 16px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      max-width: 320px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      animation: toastIn 0.25s ease forwards;
+      pointer-events: all;
+    }
+    .toast.success { border-color: #22c55e; }
+    .toast.error { border-color: #ef4444; }
+    .toast.info { border-color: var(--accent); }
+    .toast.hide { animation: toastOut 0.25s ease forwards; }
+
+    @keyframes toastIn {
+      from { opacity: 0; transform: translateX(20px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes toastOut {
+      from { opacity: 1; transform: translateX(0); }
+      to   { opacity: 0; transform: translateX(20px); }
+    }
+
+    .empty-state {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      color: var(--text-muted);
+      padding: 40px;
+      text-align: center;
+    }
+
+    #sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 30;
+    }
+
+    .logo {
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+    .logo span { color: var(--accent); }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 16px 0;
+    }
+
+    .warning-box {
+      background: #fef9c3;
+      border: 1px solid #fde047;
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 12px;
+      color: #713f12;
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+    html.dark .warning-box {
+      background: #1c1608;
+      border-color: #713f12;
+      color: #fde047;
+    }
+
+    .api-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #22c55e;
+      flex-shrink: 0;
+    }
+    .api-dot.missing { background: var(--text-muted); }
+
+    @media (max-width: 767px) {
+      #sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        transform: translateX(-100%);
+      }
+      #sidebar.open { transform: translateX(0); }
+      #sidebar-overlay { display: block; opacity: 0; pointer-events: none; transition: opacity 0.25s; }
+      #sidebar-overlay.open { opacity: 1; pointer-events: all; }
+      #hamburger { display: flex !important; }
+      .card-scene { aspect-ratio: 4/3; }
+    }
+
+    .spinner {
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--border);
+      border-top-color: var(--primary-bg);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      flex-shrink: 0;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .flip-hint {
+      position: absolute;
+      bottom: 14px;
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 500;
+      letter-spacing: 0.03em;
+    }
+
+    #study-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    #content-scroll { flex: 1; overflow-y: auto; padding: 24px 20px; display: flex; flex-direction: column; gap: 20px; }
+
+    #deck-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+      flex-wrap: wrap;
+    }
+    #deck-title-text { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; }
+
+    .api-key-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted);
+      background: transparent;
+      border: none;
+      width: 100%;
+      font-family: inherit;
+      transition: background 0.15s, color 0.15s;
+    }
+    .api-key-btn:hover { background: var(--surface2); color: var(--text); }
+
+    #pdf-text-preview { min-height: 140px; max-height: 220px; font-size: 12px; line-height: 1.6; }
+
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .focus-visible:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="toast-container"></div>
+<div id="sidebar-overlay"></div>
+
+<div id="app">
+
+  <aside id="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">Vibe<span>Flash</span></div>
+      <button class="btn-icon" id="close-sidebar" aria-label="Close sidebar" title="Close sidebar" style="display:none">
+        <i data-lucide="x" style="width:16px;height:16px"></i>
+      </button>
+    </div>
+
+    <div class="deck-list" id="deck-list"></div>
+
+    <div class="sidebar-footer">
+      <button class="btn btn-primary" id="new-deck-btn" style="width:100%;margin-bottom:8px" aria-label="Create new deck">
+        <i data-lucide="plus" style="width:15px;height:15px"></i>
+        New Deck
+      </button>
+      <button class="api-key-btn" id="open-api-modal-btn" aria-label="Open API key settings">
+        <div class="api-dot missing" id="api-indicator-dot"></div>
+        <span id="api-indicator-text">Set API Key</span>
+      </button>
+    </div>
+  </aside>
+
+  <main id="main">
+
+    <div id="topbar">
+      <button class="btn-icon" id="hamburger" aria-label="Menu" title="Menu" style="display:none">
+        <i data-lucide="menu" style="width:18px;height:18px"></i>
+      </button>
+
+      <div style="flex:1; display:flex; align-items:center; gap:8px; min-width:0;">
+        <div id="topbar-logo" class="logo" style="display:none;">Vibe<span>Flash</span></div>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:8px;">
+        <button class="btn btn-ghost btn-sm" id="pdf-import-btn" aria-label="Import PDF" title="Import PDF">
+          <i data-lucide="file-text" style="width:14px;height:14px"></i>
+          PDF Import
+        </button>
+        <button class="btn-icon" id="theme-toggle" aria-label="Toggle dark/light mode" title="Toggle theme">
+          <i data-lucide="sun" style="width:17px;height:17px" id="theme-icon-sun"></i>
+          <i data-lucide="moon" style="width:17px;height:17px" id="theme-icon-moon" class="hidden"></i>
+        </button>
+      </div>
+    </div>
+
+    <div id="study-area">
+
+      <div id="no-deck-state" class="empty-state" style="display:none">
+        <i data-lucide="layers" style="width:40px;height:40px;opacity:0.3"></i>
+        <p style="font-size:15px;font-weight:600">No deck selected</p>
+        <p style="font-size:13px">Create or select a deck from the sidebar.</p>
+        <button class="btn btn-primary btn-sm" id="empty-state-new-deck" style="margin-top:8px">
+          <i data-lucide="plus" style="width:14px;height:14px"></i>
+          Create Deck
+        </button>
+      </div>
+
+      <div id="deck-content" class="content-scroll" style="display:none;flex:1;overflow-y:auto;">
+        <div style="padding:24px 20px;display:flex;flex-direction:column;gap:20px;flex:1;">
+
+          <div id="deck-header">
+            <span id="deck-title-text"></span>
+            <button class="btn-icon" id="rename-deck-btn" aria-label="Rename deck" title="Rename deck">
+              <i data-lucide="pencil" style="width:15px;height:15px"></i>
+            </button>
+            <button class="btn-icon" id="delete-deck-btn" aria-label="Delete deck" title="Delete deck">
+              <i data-lucide="trash-2" style="width:15px;height:15px"></i>
+            </button>
+            <div style="flex:1"></div>
+            <button class="btn btn-primary btn-sm" id="add-card-btn" aria-label="Add new card">
+              <i data-lucide="plus" style="width:14px;height:14px"></i>
+              Add Card
+            </button>
+          </div>
+
+          <div id="progress-row" style="display:flex;align-items:center;gap:12px;">
+            <div id="progress-track"><div id="progress-fill" style="width:0%"></div></div>
+            <span id="card-counter" style="font-size:13px;color:var(--text-muted);font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:600;">0 / 0</span>
+            <button class="btn-icon" id="shuffle-btn" aria-label="Shuffle cards" title="Shuffle cards">
+              <i data-lucide="shuffle" style="width:16px;height:16px"></i>
+            </button>
+            <button class="btn-icon" id="reset-order-btn" aria-label="Reset to original order" title="Reset order" style="display:none">
+              <i data-lucide="rotate-ccw" style="width:16px;height:16px"></i>
+            </button>
+          </div>
+
+          <div id="card-area" style="flex:1;display:flex;flex-direction:column;gap:16px;align-items:center;">
+
+            <div id="no-cards-state" class="empty-state" style="display:none;min-height:200px">
+              <i data-lucide="credit-card" style="width:36px;height:36px;opacity:0.3"></i>
+              <p style="font-size:14px;font-weight:600">No cards yet</p>
+              <p style="font-size:13px">Click "Add Card" to create your first flashcard.</p>
+            </div>
+
+            <div class="card-scene" id="card-scene" style="display:none">
+              <div class="card-3d" id="card-3d">
+                <div class="card-face">
+                  <span class="card-label">Question</span>
+                  <div class="card-text" id="card-front-text"></div>
+                  <span class="flip-hint">Click to reveal answer</span>
+                  <div class="card-actions" id="card-actions">
+                    <button class="btn-icon" id="edit-card-btn" aria-label="Edit card" title="Edit card">
+                      <i data-lucide="pencil" style="width:14px;height:14px"></i>
+                    </button>
+                    <button class="btn-icon" id="delete-card-btn" aria-label="Delete card" title="Delete card">
+                      <i data-lucide="trash-2" style="width:14px;height:14px"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="card-face card-face-back">
+                  <span class="card-label">Answer</span>
+                  <div class="card-text" id="card-back-text"></div>
+                  <span class="flip-hint">Click to see question</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="nav-controls" id="nav-controls" style="display:none">
+              <button class="btn btn-ghost" id="prev-btn" aria-label="Previous card">
+                <i data-lucide="chevron-left" style="width:15px;height:15px"></i>
+                Prev
+              </button>
+              <button class="btn btn-ghost" id="next-btn" aria-label="Next card">
+                Next
+                <i data-lucide="chevron-right" style="width:15px;height:15px"></i>
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<!-- MODALS (unchanged) -->
+
+<div class="modal-backdrop" id="new-deck-modal">
+  <div class="modal">
+    <div class="modal-title">
+      New Deck
+      <button class="btn-icon" data-close="new-deck-modal" aria-label="Close"><i data-lucide="x" style="width:16px;height:16px"></i></button>
+    </div>
+    <div style="margin-bottom:16px">
+      <label class="form-label" for="new-deck-name">Deck Name</label>
+      <input class="form-input" id="new-deck-name" type="text" placeholder="e.g. Biology 101" maxlength="60" />
+    </div>
+    <div style="display:flex;gap:8px;justify-content:flex-end">
+      <button class="btn btn-ghost" data-close="new-deck-modal">Cancel</button>
+      <button class="btn btn-primary" id="create-deck-confirm">Create Deck</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="rename-deck-modal">
+  <div class="modal">
+    <div class="modal-title">
+      Rename Deck
+      <button class="btn-icon" data-close="rename-deck-modal" aria-label="Close"><i data-lucide="x" style="width:16px;height:16px"></i></button>
+    </div>
+    <div style="margin-bottom:16px">
+      <label class="form-label" for="rename-deck-input">New Name</label>
+      <input class="form-input" id="rename-deck-input" type="text" placeholder="Deck name" maxlength="60" />
+    </div>
+    <div style="display:flex;gap:8px;justify-content:flex-end">
+      <button class="btn btn-ghost" data-close="rename-deck-modal">Cancel</button>
+      <button class="btn btn-primary" id="rename-deck-confirm">Rename</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="delete-deck-modal">
+  <div class="modal">
+    <div class="modal-title">
+      Delete Deck
+      <button class="btn-icon" data-close="delete-deck-modal" aria-label="Close"><i data-lucide="x" style="width:16px;height:16px"></i></button>
+    </div>
+    <p style="font-size:14px;margin-bottom:20px;color:var(--text-muted)">Are you sure you want to delete <strong id="delete-deck-name-label" style="color:var(--text)"></strong>? All cards in this deck will be permanently removed.</p>
+    <div style="display:flex;gap:8px;justify-content:flex-end">
+      <button class="btn btn-ghost" data-close="delete-deck-modal">Cancel</button>
+      <button class="btn btn-danger" id="delete-deck-confirm">Delete</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="card-modal">
+  <div class="modal">
+    <div class="modal-title">
+      <span id="card-modal-title">Add Card</span>
+      <button class="btn-icon" data-close="card-modal" aria-label="Close"><i data-lucide="x" style="width:16px;height:16px"></i></button>
+    </div>
+    <div style="margin-bottom:14px">
+      <label class="form-label" for="card-front-input">Front (Question)</label>
+      <textarea class="form-input" id="card-front-input" rows="4" placeholder="Enter the question or term..."></textarea>
+    </div>
+    <div style="margin-bottom:20px">
+      <label class="form-label" for="card-back-input">Back (Answer)</label>
+      <textarea class="form-input" id="card-back-input" rows="4" placeholder="Enter the answer or definition..."></textarea>
+    </div>
+    <div style="display:flex;gap:8px;justify-content:flex-end">
+      <button class="btn btn-ghost" data-close="card-modal">Cancel</button>
+      <button class="btn btn-primary" id="save-card-btn">Save Card</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="delete-card-modal">
+  <div class="modal">
+    <div class="modal-title">
+      Delete Card
+      <button class="btn-icon" data-close="delete-card-modal" aria-label="Close"><i data-lucide="x" style="width:16px;height:16px"></i></button>
+    </div>
+    <p style="font-size:14px;margin-bottom:20px;color:var(--text-muted)">Are you sure you want to delete this card? This action cannot be undone.</p>
+    <div style="display:flex;gap:8px;justify-content:flex-end">
+      <button class="btn btn-ghost" data-close="delete-card-modal">Cancel</button>
+      <button class="btn btn-danger" id="delete-card-confirm">Delete</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="api-modal">
+  <div class="modal">
+    <div class="modal-title">
+      OpenRouter API Key
+      <button class="btn-icon" data-close="api-modal" aria-label="Close"><i data-lucide="x" style="width:16px;height:16px"></i></button>
+    </div>
+    <div class="warning-box" style="margin-bottom:16px">
+      <i data-lucide="shield-alert" style="width:15px;height:15px;flex-shrink:0;margin-top:1px"></i>
+      <div>
+        <strong>Security Notice:</strong> Your API key is stored locally in your browser's IndexedDB and is accessible via browser DevTools. Use a free-tier key only and never share this device with untrusted users.
+      </div>
+    </div>
+    <div style="margin-bottom:16px">
+      <label class="form-label" for="api-key-input">API Key</label>
+      <input class="form-input" id="api-key-input" type="password" placeholder="sk-or-..." autocomplete="off" />
+    </div>
+    <p style="font-size:12px;color:var(--text-muted);margin-bottom:16px">Get a free key at <a href="https://openrouter.ai" target="_blank" style="color:var(--accent)">openrouter.ai</a>. The free model used is <code style="font-size:11px;background:var(--surface2);padding:1px 4px;border-radius:4px">google/gemini-2.0-flash-lite-preview-02-05:free</code>.</p>
+    <div style="display:flex;gap:8px;justify-content:flex-end">
+      <button class="btn btn-ghost" data-close="api-modal">Cancel</button>
+      <button class="btn btn-ghost btn-sm" id="clear-api-key-btn" style="margin-right:auto">Clear Key</button>
+      <button class="btn btn-primary" id="save-api-key-btn">Save Key</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="pdf-modal">
+  <div class="modal modal-lg">
+    <div class="modal-title">
+      PDF Import & AI Generation
+      <button class="btn-icon" data-close="pdf-modal" aria-label="Close"><i data-lucide="x" style="width:16px;height:16px"></i></button>
+    </div>
+
+    <div id="pdf-step-upload">
+      <label class="form-label">Upload PDF</label>
+      <div style="border:2px dashed var(--border);border-radius:12px;padding:32px;text-align:center;margin-bottom:4px;transition:border-color 0.15s;" id="pdf-drop-zone">
+        <i data-lucide="upload-cloud" style="width:32px;height:32px;opacity:0.4;margin:0 auto 10px;display:block"></i>
+        <p style="font-size:14px;font-weight:600;margin-bottom:6px">Drop a PDF here</p>
+        <p style="font-size:12px;color:var(--text-muted);margin-bottom:14px">or click to browse</p>
+        <input type="file" id="pdf-file-input" accept=".pdf,application/pdf" style="display:none" />
+        <button class="btn btn-ghost btn-sm" id="pdf-browse-btn" aria-label="Browse PDF file">
+          <i data-lucide="folder-open" style="width:14px;height:14px"></i>
+          Browse File
+        </button>
+      </div>
+      <div id="pdf-loading" style="display:none; align-items:center; gap:10px; padding:12px 0; font-size:13px; color:var(--text-muted); flex-direction:column;">
+        <div class="spinner"></div>
+        <span id="pdf-progress-text">Extracting text from PDF...</span>
+      </div>
+    </div>
+
+    <div id="pdf-step-ai" style="display:none">
+      <label class="form-label">Extracted Text Preview</label>
+      <textarea class="form-input" id="pdf-text-preview" readonly placeholder="Extracted text will appear here..."></textarea>
+
+      <div class="divider"></div>
+
+      <div id="pdf-ai-section">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+          <i data-lucide="sparkles" style="width:16px;height:16px;color:var(--accent)"></i>
+          <span style="font-size:14px;font-weight:700">AI Flashcard Generation</span>
+        </div>
+
+        <div class="warning-box" id="no-api-warning" style="margin-bottom:12px;display:none">
+          <i data-lucide="key" style="width:14px;height:14px;flex-shrink:0;margin-top:1px"></i>
+          <div>No API key set. <button style="background:none;border:none;color:var(--accent);cursor:pointer;font-size:12px;font-weight:600;padding:0;font-family:inherit;" id="open-api-from-pdf">Set your API key</button> to enable AI generation.</div>
+        </div>
+
+        <div id="ai-generate-controls" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px">
+          <div style="flex:1;min-width:140px">
+            <label class="form-label">Number of Cards</label>
+            <select class="form-input" id="ai-card-count" style="height:38px">
+              <option value="5">5 cards</option>
+              <option value="10" selected>10 cards</option>
+              <option value="15">15 cards</option>
+              <option value="20">20 cards</option>
+            </select>
+          </div>
+          <div style="padding-top:18px">
+            <button class="btn btn-primary" id="generate-ai-btn">
+              <i data-lucide="sparkles" style="width:14px;height:14px"></i>
+              Generate Flashcards
+            </button>
+          </div>
+        </div>
+
+        <div id="ai-status" style="display:none;align-items:center;gap:10px;font-size:13px;color:var(--text-muted);margin-bottom:8px">
+          <div class="spinner"></div>
+          <span id="ai-status-text">Generating flashcards...</span>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px">
+        <button class="btn btn-ghost" id="pdf-reset-btn">
+          <i data-lucide="refresh-cw" style="width:14px;height:14px"></i>
+          Upload Another
+        </button>
+        <button class="btn btn-ghost" data-close="pdf-modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+'use strict';
+
+if (window.pdfjsLib) {
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
+}
+
+const db = new Dexie('VibeFlashDB');
+db.version(1).stores({
+  decks: '++id, name, createdAt',
+  cards: '++id, deckId, front, back, [deckId+order]',
+  settings: 'key, value'
+});
+
+let currentDeckId = null;
+let currentCards = [];
+let dbCards = [];
+let currentIndex = 0;
+let isFlipped = false;
+let editingCardId = null;
+let deletingCardId = null;
+let apiKey = '';
+let isShuffled = false;
+
+function $(id) { return document.getElementById(id); }
+function showEl(el, display = 'flex') { if (typeof el === 'string') el = $(el); el.style.display = display; }
+function hideEl(el) { if (typeof el === 'string') el = $(el); el.style.display = 'none'; }
+
+function openModal(id) { $(id).classList.add('open'); }
+function closeModal(id) { $(id).classList.remove('open'); }
+
+function showToast(message, type = 'info', duration = 3000) {
+  const container = $('toast-container');
+  const icons = { success: 'check-circle', error: 'x-circle', info: 'info' };
+  const t = document.createElement('div');
+  t.className = `toast ${type}`;
+  t.setAttribute('role', 'status');
+  t.innerHTML = `<i data-lucide="${icons[type] || 'info'}" style="width:15px;height:15px;flex-shrink:0"></i><span>${message}</span>`;
+  container.appendChild(t);
+  lucide.createIcons({ el: t });
+  setTimeout(() => {
+    t.classList.add('hide');
+    setTimeout(() => t.remove(), 300);
+  }, duration);
+}
+
+function applyTheme(dark) {
+  if (dark) {
+    document.documentElement.classList.add('dark');
+    document.documentElement.classList.remove('light');
+    const moonIcon = $('theme-icon-moon');
+    const sunIcon = $('theme-icon-sun');
+    if (moonIcon) { moonIcon.style.display = 'inline-block'; moonIcon.classList.remove('hidden'); }
+    if (sunIcon) { sunIcon.style.display = 'none'; sunIcon.classList.add('hidden'); }
+  } else {
+    document.documentElement.classList.remove('dark');
+    document.documentElement.classList.add('light');
+    const sunIcon = $('theme-icon-sun');
+    const moonIcon = $('theme-icon-moon');
+    if (sunIcon) { sunIcon.style.display = 'inline-block'; sunIcon.classList.remove('hidden'); }
+    if (moonIcon) { moonIcon.style.display = 'none'; moonIcon.classList.add('hidden'); }
+  }
+  lucide.createIcons();
+}
+
+async function toggleTheme() {
+  const isDark = document.documentElement.classList.contains('dark');
+  applyTheme(!isDark);
+  await db.settings.put({ key: 'theme', value: !isDark ? 'dark' : 'light' });
+}
+
+async function loadTheme() {
+  const rec = await db.settings.get('theme');
+  if (rec) applyTheme(rec.value === 'dark');
+  else applyTheme(window.matchMedia('(prefers-color-scheme: dark)').matches);
+}
+
+async function loadApiKey() {
+  const rec = await db.settings.get('apiKey');
+  apiKey = rec ? rec.value : '';
+  updateApiIndicator();
+}
+
+function updateApiIndicator() {
+  const dot = $('api-indicator-dot');
+  const text = $('api-indicator-text');
+  if (apiKey) {
+    dot.classList.remove('missing');
+    text.textContent = 'API Key Set';
+  } else {
+    dot.classList.add('missing');
+    text.textContent = 'Set API Key';
+  }
+}
+
+async function saveApiKey() {
+  const val = $('api-key-input').value.trim();
+  apiKey = val;
+  await db.settings.put({ key: 'apiKey', value: val });
+  updateApiIndicator();
+  closeModal('api-modal');
+  showToast(val ? 'API key saved.' : 'API key cleared.', 'success');
+  if ($('pdf-modal').classList.contains('open')) refreshPdfAiControls();
+}
+
+async function clearApiKey() {
+  apiKey = '';
+  $('api-key-input').value = '';
+  await db.settings.put({ key: 'apiKey', value: '' });
+  updateApiIndicator();
+  closeModal('api-modal');
+  showToast('API key cleared.', 'info');
+  if ($('pdf-modal').classList.contains('open')) refreshPdfAiControls();
+}
+
+function refreshPdfAiControls() {
+  const hasKey = !!apiKey;
+  const warning = $('no-api-warning');
+  const genBtn = $('generate-ai-btn');
+  if (hasKey) {
+    if (warning) warning.style.display = 'none';
+    if (genBtn) genBtn.disabled = false;
+  } else {
+    if (warning) warning.style.display = 'flex';
+    if (genBtn) genBtn.disabled = true;
+  }
+}
+
+async function loadDecks() {
+  const decks = await db.decks.orderBy('createdAt').toArray();
+  renderDeckList(decks);
+  return decks;
+}
+
+function renderDeckList(decks) {
+  const list = $('deck-list');
+  list.innerHTML = '';
+  decks.forEach(deck => {
+    const item = document.createElement('div');
+    item.className = 'deck-item' + (deck.id === currentDeckId ? ' active' : '');
+    item.dataset.id = deck.id;
+    item.setAttribute('role', 'button');
+    item.setAttribute('tabindex', '0');
+    item.setAttribute('aria-label', `Select deck ${deck.name}`);
+    item.innerHTML = `
+      <i data-lucide="layers" style="width:15px;height:15px;flex-shrink:0"></i>
+      <span class="deck-name">${escapeHtml(deck.name)}</span>
+      <span class="deck-count" id="deck-count-${deck.id}">–</span>
+    `;
+    item.addEventListener('click', () => selectDeck(deck.id));
+    item.addEventListener('keydown', (e) => { if (e.key === 'Enter') selectDeck(deck.id); });
+    list.appendChild(item);
+  });
+  lucide.createIcons({ el: list });
+  decks.forEach(async deck => {
+    const count = await db.cards.where('deckId').equals(deck.id).count();
+    const el = $(`deck-count-${deck.id}`);
+    if (el) el.textContent = count;
+  });
+}
+
+function escapeHtml(str) {
+  const d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML;
+}
+
+async function selectDeck(id) {
+  currentDeckId = id;
+  isShuffled = false;
+  await db.settings.put({ key: 'lastDeckId', value: id });
+  await loadDecksAndCards();
+  closeMobileSidebar();
+}
+
+async function loadDecksAndCards() {
+  const decks = await db.decks.orderBy('createdAt').toArray();
+  renderDeckList(decks);
+
+  if (!currentDeckId) {
+    hideEl('deck-content');
+    showEl('no-deck-state', 'flex');
+    return;
+  }
+
+  const deck = decks.find(d => d.id === currentDeckId);
+  if (!deck) {
+    currentDeckId = null;
+    hideEl('deck-content');
+    showEl('no-deck-state', 'flex');
+    return;
+  }
+
+  hideEl('no-deck-state');
+  showEl('deck-content', 'flex');
+  $('deck-title-text').textContent = deck.name;
+
+  dbCards = await db.cards.where('deckId').equals(currentDeckId).sortBy('order');
+  if (!isShuffled) {
+    currentCards = [...dbCards];
+  } else {
+    if (currentCards.length === dbCards.length && currentCards.every(c => dbCards.some(dc => dc.id === c.id))) {
+      currentIndex = Math.min(currentIndex, currentCards.length - 1);
+    } else {
+      isShuffled = false;
+      currentCards = [...dbCards];
+    }
+  }
+  if (currentIndex < 0) currentIndex = 0;
+  if (currentCards.length > 0 && currentIndex >= currentCards.length) currentIndex = currentCards.length - 1;
+  isFlipped = false;
+  renderCard();
+}
+
+function renderCard() {
+  const card3d = $('card-3d');
+  const cardScene = $('card-scene');
+  const noCards = $('no-cards-state');
+  const navControls = $('nav-controls');
+  const resetBtn = $('reset-order-btn');
+
+  if (currentCards.length === 0) {
+    showEl(noCards, 'flex');
+    hideEl(cardScene);
+    hideEl(navControls);
+    $('card-counter').textContent = '0 / 0';
+    $('progress-fill').style.width = '0%';
+    if (resetBtn) resetBtn.style.display = 'none';
+    return;
+  }
+
+  hideEl(noCards);
+  showEl(cardScene, 'block');
+  showEl(navControls, 'flex');
+  resetBtn.style.display = isShuffled ? 'flex' : 'none';
+
+  const card = currentCards[currentIndex];
+  $('card-front-text').textContent = card.front;
+  $('card-back-text').textContent = card.back;
+
+  isFlipped = false;
+  card3d.classList.remove('flipped');
+
+  const total = currentCards.length;
+  const current = currentIndex + 1;
+  $('card-counter').textContent = `${current} / ${total}`;
+  $('progress-fill').style.width = `${(current / total) * 100}%`;
+
+  $('prev-btn').disabled = currentIndex === 0;
+  $('next-btn').disabled = currentIndex === total - 1;
+}
+
+function resetOrder() {
+  if (!isShuffled) return;
+  currentCards = [...dbCards];
+  isShuffled = false;
+  currentIndex = 0;
+  renderCard();
+  showToast('Order reset to original', 'info');
+}
+
+async function createDeck(name) {
+  const id = await db.decks.add({ name: name.trim(), createdAt: Date.now() });
+  currentDeckId = id;
+  await loadDecksAndCards();
+  showToast(`Deck "${name}" created!`, 'success');
+}
+
+async function renameDeck() {
+  const newName = $('rename-deck-input').value.trim();
+  if (!newName) return;
+  await db.decks.update(currentDeckId, { name: newName });
+  closeModal('rename-deck-modal');
+  await loadDecksAndCards();
+  showToast('Deck renamed.', 'success');
+}
+
+async function deleteDeck() {
+  await db.cards.where('deckId').equals(currentDeckId).delete();
+  await db.decks.delete(currentDeckId);
+  currentDeckId = null;
+  closeModal('delete-deck-modal');
+  await loadDecksAndCards();
+  showToast('Deck deleted.', 'info');
+}
+
+async function saveCard() {
+  const front = $('card-front-input').value.trim();
+  const back = $('card-back-input').value.trim();
+  if (!front || !back) {
+    showToast('Please fill in both front and back.', 'error');
+    return;
+  }
+
+  if (editingCardId) {
+    await db.cards.update(editingCardId, { front, back });
+    showToast('Card updated.', 'success');
+  } else {
+    const maxOrder = dbCards.length > 0 ? Math.max(...dbCards.map(c => c.order || 0)) + 1 : 0;
+    await db.cards.add({ deckId: currentDeckId, front, back, order: maxOrder });
+    showToast('Card added!', 'success');
+  }
+
+  const wasEditing = !!editingCardId;
+  const editedId = editingCardId;
+  editingCardId = null;
+  closeModal('card-modal');
+
+  await loadDecksAndCards();
+
+  if (wasEditing && editedId) {
+    const newIdx = currentCards.findIndex(c => c.id === editedId);
+    if (newIdx !== -1) currentIndex = newIdx;
+    renderCard();
+  } else if (!wasEditing && currentCards.length > 0) {
+    currentIndex = currentCards.length - 1;
+    renderCard();
+  }
+}
+
+async function deleteCard() {
+  await db.cards.delete(deletingCardId);
+  closeModal('delete-card-modal');
+  deletingCardId = null;
+  const oldLen = currentCards.length;
+  await loadDecksAndCards();
+  if (oldLen === 1) currentIndex = 0;
+  else if (currentIndex >= currentCards.length) currentIndex = Math.max(0, currentCards.length - 1);
+  renderCard();
+  showToast('Card deleted.', 'info');
+}
+
+function shuffleCards() {
+  if (currentCards.length < 2) { showToast('Need at least 2 cards to shuffle.', 'info'); return; }
+  const arr = [...currentCards];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  currentCards = arr;
+  currentIndex = 0;
+  isShuffled = true;
+  renderCard();
+  showToast('Cards shuffled!', 'info');
+}
+
+async function extractPdfText(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+      try {
+        const typedArray = new Uint8Array(e.target.result);
+        const pdf = await pdfjsLib.getDocument({ data: typedArray }).promise;
+        let fullText = '';
+        const progressSpan = $('pdf-progress-text');
+        for (let i = 1; i <= pdf.numPages; i++) {
+          if (progressSpan) progressSpan.textContent = `Extracting page ${i} of ${pdf.numPages}...`;
+          const page = await pdf.getPage(i);
+          const content = await page.getTextContent();
+          fullText += content.items.map(item => item.str).join(' ') + '\n';
+        }
+        if (progressSpan) progressSpan.textContent = 'Extraction complete!';
+        resolve(fullText.trim());
+      } catch (err) { reject(err); }
+    };
+    reader.onerror = reject;
+    reader.readAsArrayBuffer(file);
+  });
+}
+
+async function handlePdfFile(file) {
+  if (!file || file.type !== 'application/pdf') {
+    showToast('Please upload a valid PDF file.', 'error');
+    return;
+  }
+  showEl('pdf-loading', 'flex');
+  hideEl('pdf-step-upload');
+  try {
+    const text = await extractPdfText(file);
+    hideEl('pdf-loading');
+    hideEl('pdf-step-upload');
+    showEl('pdf-step-ai', 'block');
+    $('pdf-text-preview').value = text;
+    if (text.length < 100) {
+      showToast('Extracted text is very short. PDF may be image-based or scanned — AI generation might fail.', 'info');
+    }
+    refreshPdfAiControls();
+  } catch (err) {
+    hideEl('pdf-loading');
+    showEl('pdf-step-upload', 'block');
+    showToast('Failed to extract PDF text: ' + err.message, 'error');
+    console.error(err);
+  }
+}
+
+async function generateFlashcards() {
+  if (!apiKey) {
+    showToast('Please set your API key first.', 'error');
+    return;
+  }
+  if (!currentDeckId) {
+    showToast('Please select a deck first.', 'error');
+    return;
+  }
+
+  const text = $('pdf-text-preview').value.trim();
+  if (!text) {
+    showToast('No text to generate from.', 'error');
+    return;
+  }
+
+  const count = $('ai-card-count').value;
+  const prompt = `Based on the following text, generate ${count} flashcards (question on front, answer on back). Return ONLY a valid JSON array with no markdown, no explanation, no code block. Format: [{"front": "...", "back": "..."}]\n\nText:\n${text.slice(0, 8000)}`;
+
+  showEl('ai-status', 'flex');
+  $('ai-status-text').textContent = 'Generating flashcards...';
+  $('generate-ai-btn').disabled = true;
+
+  try {
+    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`,
+        'HTTP-Referer': window.location.origin,
+        'X-Title': 'VibeFlash'
+      },
+      body: JSON.stringify({
+        model: 'google/gemini-2.0-flash-lite-preview-02-05:free',
+        messages: [{ role: 'user', content: prompt }],
+        temperature: 0.7,
+        max_tokens: 4000
+      })
+    });
+
+    if (!response.ok) {
+      const errData = await response.json().catch(() => ({}));
+      throw new Error(errData.error?.message || `HTTP ${response.status}`);
+    }
+
+    const data = await response.json();
+    let rawContent = data.choices?.[0]?.message?.content || '';
+    let cards;
+    try {
+      let cleaned = rawContent.replace(/```(?:json)?\n?/g, '').replace(/```/g, '').trim();
+      const jsonMatch = cleaned.match(/\[[\s\S]*\]/);
+      if (jsonMatch) cleaned = jsonMatch[0];
+      cards = JSON.parse(cleaned);
+    } catch {
+      throw new Error('AI returned invalid JSON. Try again.');
+    }
+
+    if (!Array.isArray(cards) || cards.length === 0) throw new Error('No cards found in AI response.');
+
+    const maxOrder = dbCards.length > 0 ? Math.max(...dbCards.map(c => c.order || 0)) + 1 : 0;
+    const toInsert = cards
+      .filter(c => c.front && c.back)
+      .map((c, i) => ({
+        deckId: currentDeckId,
+        front: String(c.front).trim(),
+        back: String(c.back).trim(),
+        order: maxOrder + i
+      }));
+
+    await db.cards.bulkAdd(toInsert);
+    hideEl('ai-status');
+    $('generate-ai-btn').disabled = false;
+    closeModal('pdf-modal');
+    await loadDecksAndCards();
+    showToast(`${toInsert.length} flashcards added successfully!`, 'success');
+  } catch (err) {
+    hideEl('ai-status');
+    $('generate-ai-btn').disabled = false;
+    showToast('Generation failed: ' + err.message, 'error');
+    console.error(err);
+  }
+}
+
+function openMobileSidebar() {
+  $('sidebar').classList.add('open');
+  $('sidebar-overlay').classList.add('open');
+  const closeBtn = $('close-sidebar');
+  closeBtn.style.display = 'flex';
+  lucide.createIcons({ el: closeBtn });
+}
+function closeMobileSidebar() {
+  $('sidebar').classList.remove('open');
+  $('sidebar-overlay').classList.remove('open');
+  $('close-sidebar').style.display = 'none';
+}
+
+function resetPdfModal() {
+  showEl('pdf-step-upload', 'block');
+  hideEl('pdf-step-ai');
+  hideEl('pdf-loading');
+  $('pdf-file-input').value = '';
+  $('pdf-text-preview').value = '';
+  hideEl('ai-status');
+  $('generate-ai-btn').disabled = false;
+  refreshPdfAiControls();
+  const progressSpan = $('pdf-progress-text');
+  if (progressSpan) progressSpan.textContent = 'Extracting text from PDF...';
+}
+
+async function init() {
+  await loadTheme();
+  await loadApiKey();
+
+  const deckCount = await db.decks.count();
+  if (deckCount === 0) await db.decks.add({ name: 'General', createdAt: Date.now() });
+
+  const lastRec = await db.settings.get('lastDeckId');
+  if (lastRec && lastRec.value) {
+    const exists = await db.decks.get(lastRec.value);
+    if (exists) currentDeckId = lastRec.value;
+  }
+  if (!currentDeckId) {
+    const firstDeck = await db.decks.orderBy('createdAt').first();
+    if (firstDeck) currentDeckId = firstDeck.id;
+  }
+
+  await loadDecksAndCards();
+  lucide.createIcons();
+  checkMobile();
+}
+
+function checkMobile() {
+  const isMobile = window.innerWidth < 768;
+  const hamburger = $('hamburger');
+  const closeBtn = $('close-sidebar');
+  const topbarLogo = $('topbar-logo');
+  if (isMobile) {
+    hamburger.style.display = 'flex';
+    topbarLogo.style.display = 'block';
+  } else {
+    hamburger.style.display = 'none';
+    topbarLogo.style.display = 'none';
+    $('sidebar').classList.remove('open');
+    $('sidebar-overlay').classList.remove('open');
+    closeBtn.style.display = 'none';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  init();
+
+  $('theme-toggle').addEventListener('click', toggleTheme);
+  $('hamburger').addEventListener('click', openMobileSidebar);
+  $('close-sidebar').addEventListener('click', closeMobileSidebar);
+  $('sidebar-overlay').addEventListener('click', closeMobileSidebar);
+
+  document.querySelectorAll('[data-close]').forEach(btn => {
+    btn.addEventListener('click', () => closeModal(btn.dataset.close));
+  });
+  document.querySelectorAll('.modal-backdrop').forEach(backdrop => {
+    backdrop.addEventListener('click', (e) => { if (e.target === backdrop) closeModal(backdrop.id); });
+  });
+
+  $('new-deck-btn').addEventListener('click', () => {
+    $('new-deck-name').value = '';
+    openModal('new-deck-modal');
+    setTimeout(() => $('new-deck-name').focus(), 50);
+  });
+  $('create-deck-confirm').addEventListener('click', async () => {
+    const name = $('new-deck-name').value.trim();
+    if (!name) { showToast('Please enter a deck name.', 'error'); return; }
+    closeModal('new-deck-modal');
+    await createDeck(name);
+  });
+  $('new-deck-name').addEventListener('keydown', (e) => { if (e.key === 'Enter') $('create-deck-confirm').click(); });
+
+  $('empty-state-new-deck')?.addEventListener('click', () => {
+    $('new-deck-name').value = '';
+    openModal('new-deck-modal');
+    setTimeout(() => $('new-deck-name').focus(), 50);
+  });
+
+  $('rename-deck-btn').addEventListener('click', () => {
+    $('rename-deck-input').value = $('deck-title-text').textContent;
+    openModal('rename-deck-modal');
+    setTimeout(() => $('rename-deck-input').focus(), 50);
+  });
+  $('rename-deck-confirm').addEventListener('click', renameDeck);
+  $('rename-deck-input').addEventListener('keydown', (e) => { if (e.key === 'Enter') $('rename-deck-confirm').click(); });
+
+  $('delete-deck-btn').addEventListener('click', async () => {
+    const deck = await db.decks.get(currentDeckId);
+    $('delete-deck-name-label').textContent = deck ? deck.name : '';
+    openModal('delete-deck-modal');
+  });
+  $('delete-deck-confirm').addEventListener('click', deleteDeck);
+
+  $('add-card-btn').addEventListener('click', () => {
+    if (!currentDeckId) return;
+    editingCardId = null;
+    $('card-modal-title').textContent = 'Add Card';
+    $('card-front-input').value = '';
+    $('card-back-input').value = '';
+    $('save-card-btn').textContent = 'Save Card';
+    openModal('card-modal');
+    setTimeout(() => $('card-front-input').focus(), 50);
+  });
+
+  $('edit-card-btn').addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (currentCards.length === 0) return;
+    const card = currentCards[currentIndex];
+    editingCardId = card.id;
+    $('card-modal-title').textContent = 'Edit Card';
+    $('card-front-input').value = card.front;
+    $('card-back-input').value = card.back;
+    $('save-card-btn').textContent = 'Update Card';
+    openModal('card-modal');
+    setTimeout(() => $('card-front-input').focus(), 50);
+  });
+
+  $('save-card-btn').addEventListener('click', saveCard);
+  $('delete-card-btn').addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (currentCards.length === 0) return;
+    deletingCardId = currentCards[currentIndex].id;
+    openModal('delete-card-modal');
+  });
+  $('delete-card-confirm').addEventListener('click', deleteCard);
+
+  $('card-scene').addEventListener('click', (e) => {
+    if (e.target.closest('.card-actions')) return;
+    isFlipped = !isFlipped;
+    $('card-3d').classList.toggle('flipped', isFlipped);
+  });
+
+  $('prev-btn').addEventListener('click', () => {
+    if (currentIndex > 0) { currentIndex--; renderCard(); }
+  });
+  $('next-btn').addEventListener('click', () => {
+    if (currentIndex < currentCards.length - 1) { currentIndex++; renderCard(); }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (document.querySelector('.modal-backdrop.open')) return;
+    if (e.key === 'ArrowLeft') $('prev-btn').click();
+    if (e.key === 'ArrowRight') $('next-btn').click();
+    if (e.key === ' ') { e.preventDefault(); $('card-scene').click(); }
+  });
+
+  $('shuffle-btn').addEventListener('click', shuffleCards);
+  $('reset-order-btn').addEventListener('click', resetOrder);
+
+  $('open-api-modal-btn').addEventListener('click', () => {
+    $('api-key-input').value = apiKey;
+    openModal('api-modal');
+    setTimeout(() => $('api-key-input').focus(), 50);
+  });
+  $('save-api-key-btn').addEventListener('click', saveApiKey);
+  $('clear-api-key-btn').addEventListener('click', clearApiKey);
+
+  $('pdf-import-btn').addEventListener('click', () => {
+    if (!currentDeckId) { showToast('Please select a deck first.', 'error'); return; }
+    resetPdfModal();
+    openModal('pdf-modal');
+  });
+  $('pdf-browse-btn').addEventListener('click', () => $('pdf-file-input').click());
+  $('pdf-file-input').addEventListener('change', (e) => { if (e.target.files[0]) handlePdfFile(e.target.files[0]); });
+
+  const dropZone = $('pdf-drop-zone');
+  dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.style.borderColor = 'var(--accent)'; });
+  dropZone.addEventListener('dragleave', () => { dropZone.style.borderColor = 'var(--border)'; });
+  dropZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropZone.style.borderColor = 'var(--border)';
+    const file = e.dataTransfer.files[0];
+    if (file) handlePdfFile(file);
+  });
+
+  $('pdf-reset-btn').addEventListener('click', resetPdfModal);
+  $('generate-ai-btn').addEventListener('click', generateFlashcards);
+  $('open-api-from-pdf').addEventListener('click', () => {
+    closeModal('pdf-modal');
+    $('api-key-input').value = apiKey;
+    openModal('api-modal');
+    setTimeout(() => $('api-key-input').focus(), 50);
+  });
+
+  window.addEventListener('resize', checkMobile);
+});
+</script>
+</body>
+</html>

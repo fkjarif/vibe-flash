@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="VibeFlash Terms of Use – understand your rights and responsibilities when using the VibeFlash flashcard app." />
+  <title>Terms of Use – VibeFlash</title>
+
+  <!-- Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── CSS Variables ───────────────────────────── */
+    :root {
+      --bg:           #FAFAFA;
+      --bg-card:      #FFFFFF;
+      --bg-subtle:    #F4F4F5;
+      --text:         #111111;
+      --text-muted:   #6B7280;
+      --text-faint:   #9CA3AF;
+      --border:       #E5E5E5;
+      --border-faint: rgba(0,0,0,0.06);
+      --accent:       #3B82F6;
+      --accent-hover: #2563EB;
+      --shadow:       0 1px 3px rgba(0,0,0,0.05), 0 0 0 1px rgba(0,0,0,0.06);
+      --radius:       24px;
+      --grad-via:     #D1D5DB;
+      --tag-bg:       #F3F4F6;
+      --tag-text:     #374151;
+      --warn-bg:      #FFFBEB;
+      --warn-border:  #FDE68A;
+      --warn-text:    #92400E;
+    }
+    html.dark {
+      --bg:           #0A0A0A;
+      --bg-card:      #111111;
+      --bg-subtle:    #1A1A1A;
+      --text:         #EDEDED;
+      --text-muted:   #9CA3AF;
+      --text-faint:   #6B7280;
+      --border:       #272727;
+      --border-faint: rgba(255,255,255,0.06);
+      --accent:       #60A5FA;
+      --accent-hover: #93C5FD;
+      --shadow:       0 1px 3px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.06);
+      --grad-via:     #374151;
+      --tag-bg:       #1F2937;
+      --tag-text:     #D1D5DB;
+      --warn-bg:      #1C1400;
+      --warn-border:  #78350F;
+      --warn-text:    #FCD34D;
+    }
+
+    /* ── Reset & Base ────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+      font-size: 16px;
+      background-color: var(--bg);
+      color: var(--text);
+      transition: background-color 0.3s ease, color 0.3s ease;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: color 0.18s ease;
+    }
+    a:hover { color: var(--accent-hover); }
+
+    /* ── Top gradient bar ────────────────────────── */
+    .top-bar {
+      height: 2px;
+      width: 100%;
+      background: linear-gradient(to right, transparent, var(--grad-via), transparent);
+      flex-shrink: 0;
+    }
+
+    /* ── Navbar ──────────────────────────────────── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+      height: 56px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+    }
+    .nav-logo svg { flex-shrink: 0; }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .nav-link {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 0.375rem 0.625rem;
+      border-radius: 8px;
+      transition: color 0.18s ease, background 0.18s ease;
+    }
+    .nav-link:hover {
+      color: var(--text);
+      background: var(--bg-subtle);
+    }
+    .nav-link.active {
+      color: var(--text);
+      background: var(--bg-subtle);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* ── Theme toggle ────────────────────────────── */
+    #theme-toggle {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease, transform 0.15s ease;
+      flex-shrink: 0;
+    }
+    #theme-toggle:hover {
+      background: var(--bg-subtle);
+      color: var(--text);
+      transform: scale(1.05);
+    }
+    #theme-toggle svg { width: 16px; height: 16px; }
+
+    /* ── Page layout ─────────────────────────────── */
+    .page-wrapper {
+      flex: 1;
+      width: 100%;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 4rem;
+    }
+
+    /* ── Page header ─────────────────────────────── */
+    .page-header {
+      margin-bottom: 2.5rem;
+    }
+
+    .page-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 0.75rem;
+    }
+    .page-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 16px;
+      height: 1px;
+      background: var(--text-faint);
+    }
+
+    .page-title {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+
+    .page-meta {
+      font-size: 0.82rem;
+      color: var(--text-faint);
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .page-meta span {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    /* ── Divider ─────────────────────────────────── */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── TOC ─────────────────────────────────────── */
+    .toc {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+    .toc-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 0.75rem;
+    }
+    .toc ol {
+      list-style: none;
+      counter-reset: toc-counter;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    .toc ol li {
+      counter-increment: toc-counter;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .toc ol li::before {
+      content: counter(toc-counter, decimal-leading-zero);
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-faint);
+      min-width: 22px;
+      font-variant-numeric: tabular-nums;
+    }
+    .toc ol li a {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+    .toc ol li a:hover { color: var(--text); }
+
+    /* ── Sections ────────────────────────────────── */
+    .section {
+      margin-bottom: 2.5rem;
+      scroll-margin-top: 80px;
+    }
+
+    .section-number {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 0.35rem;
+      display: block;
+    }
+
+    .section-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: -0.015em;
+      color: var(--text);
+      margin-bottom: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .section-body {
+      font-size: 0.9rem;
+      line-height: 1.8;
+      color: var(--text-muted);
+    }
+    .section-body p { margin-bottom: 0.9rem; }
+    .section-body p:last-child { margin-bottom: 0; }
+    .section-body strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+    .section-body ul, .section-body ol {
+      padding-left: 1.25rem;
+      margin-bottom: 0.9rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .section-body li { font-size: 0.88rem; line-height: 1.7; }
+
+    /* ── Warning box ─────────────────────────────── */
+    .warn-box {
+      background: var(--warn-bg);
+      border: 1px solid var(--warn-border);
+      border-radius: 14px;
+      padding: 1rem 1.25rem;
+      margin: 1rem 0;
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+    }
+    .warn-icon { flex-shrink: 0; margin-top: 2px; }
+    .warn-box p {
+      font-size: 0.83rem;
+      line-height: 1.7;
+      color: var(--warn-text) !important;
+      margin: 0 !important;
+    }
+    .warn-box strong { color: var(--warn-text) !important; }
+
+    /* ── Info card ───────────────────────────────── */
+    .info-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.25rem 1.5rem;
+      margin-top: 1rem;
+    }
+    .info-card-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 0.5rem;
+    }
+    .info-card p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    /* ── Tag / badge ─────────────────────────────── */
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      background: var(--tag-bg);
+      color: var(--tag-text);
+      border: 1px solid var(--border);
+      vertical-align: middle;
+    }
+
+    /* ── Footer ──────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 1.5rem;
+      text-align: center;
+    }
+    .footer-inner {
+      max-width: 760px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      align-items: center;
+    }
+    .footer-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .footer-links a {
+      font-size: 0.78rem;
+      color: var(--text-faint);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: var(--text-muted); }
+    .footer-copy {
+      font-size: 0.75rem;
+      color: var(--text-faint);
+    }
+    .footer-dot {
+      display: inline-block;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: var(--text-faint);
+      margin: 0 0.3rem;
+      vertical-align: middle;
+    }
+
+    /* ── Responsive ──────────────────────────────── */
+    @media (max-width: 540px) {
+      .page-title { font-size: 1.55rem; }
+      .page-wrapper { padding: 2rem 1rem 3rem; }
+      nav { padding: 0 1rem; }
+      .nav-link span { display: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Top gradient bar -->
+  <div class="top-bar"></div>
+
+  <!-- Navbar -->
+  <nav>
+    <a href="/" class="nav-logo">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+      </svg>
+      VibeFlash
+    </a>
+    <div class="nav-links">
+      <a href="/" class="nav-link">Home</a>
+      <a href="app.html" class="nav-link">App</a>
+      <a href="terms-of-use.html" class="nav-link active">Terms</a>
+      <a href="privacy-policy.html" class="nav-link">Privacy</a>
+    </div>
+    <div class="nav-right">
+      <button id="theme-toggle" aria-label="Toggle dark mode">
+        <svg id="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+          <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+        <svg id="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Page content -->
+  <div class="page-wrapper">
+
+    <!-- Header -->
+    <header class="page-header">
+      <div class="page-eyebrow">Legal</div>
+      <h1 class="page-title">Terms of Use</h1>
+      <div class="page-meta">
+        <span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Effective: May 21, 2026
+        </span>
+        <span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          ~5 min read
+        </span>
+        <span>
+          <a href="privacy-policy.html" style="font-size:0.82rem; color: var(--text-faint);">Also see: Privacy Policy →</a>
+        </span>
+      </div>
+    </header>
+
+    <div class="divider"></div>
+
+    <!-- Table of Contents -->
+    <div class="toc">
+      <div class="toc-title">Table of Contents</div>
+      <ol>
+        <li><a href="#acceptance">Acceptance of Terms</a></li>
+        <li><a href="#description">Description of Service</a></li>
+        <li><a href="#byok">Bring Your Own API Key (BYOK)</a></li>
+        <li><a href="#responsibilities">User Responsibilities</a></li>
+        <li><a href="#warranties">No Warranties</a></li>
+        <li><a href="#liability">Limitation of Liability</a></li>
+        <li><a href="#changes">Changes to Terms</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <section class="section" id="acceptance">
+      <span class="section-number">Section 01</span>
+      <h2 class="section-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-faint);flex-shrink:0;"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        Acceptance of Terms
+      </h2>
+      <div class="section-body">
+        <p>By accessing or using <strong>VibeFlash</strong> (the "Service"), you agree to be bound by these Terms of Use ("Terms"). Please read them carefully before using the app.</p>
+        <p>If you do not agree with any part of these Terms, you must discontinue use of the Service immediately. Your continued use of VibeFlash constitutes acceptance of these Terms, including any future updates.</p>
+        <p>These Terms apply to all visitors, users, and anyone who accesses or uses the Service.</p>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Section 2 -->
+    <section class="section" id="description">
+      <span class="section-number">Section 02</span>
+      <h2 class="section-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-faint);flex-shrink:0;"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        Description of Service
+      </h2>
+      <div class="section-body">
+        <p>VibeFlash is a <strong>static, browser-based flashcard application</strong>. It allows users to create flashcard decks manually, import text from PDF files (processed locally via PDF.js), and optionally use AI models via the OpenRouter API to generate flashcards automatically.</p>
+        <p>Key technical characteristics of the Service:</p>
+        <ul>
+          <li><strong>No backend server.</strong> VibeFlash does not have a server-side component. There are no databases, user accounts, or authentication systems owned or operated by VibeFlash.</li>
+          <li><strong>Client-side only.</strong> All flashcard data — including your decks, cards, and any stored API key — lives exclusively in your browser's <strong>IndexedDB</strong> local storage. It never leaves your device unless you explicitly trigger an AI generation request (see Section 3).</li>
+          <li><strong>PDF processing is local.</strong> When you upload a PDF, all text extraction occurs in your browser using PDF.js. No file is transmitted to any VibeFlash server.</li>
+          <li><strong>Statically hosted.</strong> The app is deployed as a static site on Netlify, meaning the files you receive are pre-built HTML, CSS, and JavaScript — there is no server processing your requests.</li>
+        </ul>
+        <p>The Service is provided free of charge and may be modified, updated, or discontinued at any time without prior notice.</p>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Section 3 -->
+    <section class="section" id="byok">
+      <span class="section-number">Section 03</span>
+      <h2 class="section-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-faint);flex-shrink:0;"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+        Bring Your Own API Key (BYOK)
+      </h2>
+      <div class="section-body">
+        <p>The AI-powered flashcard generation feature requires you to supply your own API key from <strong>OpenRouter</strong> (<a href="https://openrouter.ai" target="_blank" rel="noopener noreferrer">openrouter.ai</a>). VibeFlash does not provide, proxy, or subsidize access to any AI model.</p>
+
+        <p>By using the BYOK feature, you acknowledge and agree to the following:</p>
+        <ul>
+          <li><strong>Key storage.</strong> Your API key is stored locally in your browser's IndexedDB. It is not transmitted to, seen by, or stored on any VibeFlash server.</li>
+          <li><strong>Direct API calls.</strong> When you initiate AI generation, your browser makes a direct HTTP request to <code style="font-family:monospace;font-size:0.82em;background:var(--bg-subtle);padding:1px 5px;border-radius:5px;">https://openrouter.ai/api/v1/</code>. VibeFlash's servers are not involved in this transaction.</li>
+          <li><strong>Your responsibility for costs.</strong> You are solely responsible for all API usage costs incurred under your OpenRouter account. VibeFlash has no visibility into your usage and will not reimburse any charges.</li>
+          <li><strong>Your responsibility for security.</strong> You are solely responsible for keeping your API key confidential. Use a key with appropriate rate limits and credit caps. Revoke keys you no longer use at <a href="https://openrouter.ai/keys" target="_blank" rel="noopener noreferrer">openrouter.ai/keys</a>.</li>
+          <li><strong>OpenRouter's terms apply.</strong> Your use of the OpenRouter API is also governed by <a href="https://openrouter.ai/terms" target="_blank" rel="noopener noreferrer">OpenRouter's own Terms of Service</a>.</li>
+        </ul>
+
+        <div class="warn-box">
+          <svg class="warn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--warn-text);"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <p><strong>Security Warning:</strong> Because VibeFlash is a client-side app, anyone with access to your device and browser DevTools (e.g., the Application → IndexedDB panel) can potentially read your stored API key. <strong>Never use a high-credit, unrestricted API key.</strong> Always use a key configured with spending limits. VibeFlash is not liable for unauthorized use of your API key.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Section 4 -->
+    <section class="section" id="responsibilities">
+      <span class="section-number">Section 04</span>
+      <h2 class="section-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-faint);flex-shrink:0;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        User Responsibilities
+      </h2>
+      <div class="section-body">
+        <p>As a user of VibeFlash, you agree that you will:</p>
+        <ul>
+          <li>Use the Service only for lawful purposes and in accordance with these Terms.</li>
+          <li>Not upload, input, or process any content that is illegal, infringing, harmful, or that violates any third-party rights.</li>
+          <li>Not attempt to reverse-engineer, decompile, or tamper with the Service in ways that would harm other users or circumvent security measures.</li>
+          <li>Take full responsibility for any content you create using the Service, including AI-generated flashcards. AI outputs may be inaccurate — always verify important information.</li>
+          <li>Comply with the terms of any third-party services you connect to VibeFlash (e.g., OpenRouter).</li>
+          <li>Not use the Service to store, process, or transmit sensitive personal data such as passwords, payment information, or government identifiers.</li>
+        </ul>
+        <p>Since all data is stored in your browser, <strong>you are solely responsible for backing up your flashcard data</strong>. Clearing your browser's site data will permanently delete all decks and cards.</p>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Section 5 -->
+    <section class="section" id="warranties">
+      <span class="section-number">Section 05</span>
+      <h2 class="section-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-faint);flex-shrink:0;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        No Warranties
+      </h2>
+      <div class="section-body">
+        <p>VibeFlash is provided <strong>"as is"</strong> and <strong>"as available"</strong> without warranty of any kind, express or implied, including but not limited to:</p>
+        <ul>
+          <li>Warranties of merchantability, fitness for a particular purpose, or non-infringement.</li>
+          <li>Any warranty that the Service will be uninterrupted, error-free, or free of viruses or other harmful components.</li>
+          <li>Any warranty regarding the accuracy, completeness, or reliability of AI-generated flashcard content.</li>
+          <li>Any guarantee that your locally stored data (IndexedDB) will persist indefinitely. Browser updates, storage limits, or user actions (clearing site data) may result in data loss.</li>
+        </ul>
+        <p>You use VibeFlash entirely at your own risk. We strongly recommend periodically exporting or copying important study material.</p>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Section 6 -->
+    <section class="section" id="liability">
+      <span class="section-number">Section 06</span>
+      <h2 class="section-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-faint);flex-shrink:0;"><path d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+        Limitation of Liability
+      </h2>
+      <div class="section-body">
+        <p>To the fullest extent permitted by applicable law, the creator of VibeFlash shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including but not limited to:</p>
+        <ul>
+          <li><strong>Data loss</strong> — including loss of flashcard decks, cards, or settings caused by browser clearing, storage limits, app updates, or any other reason.</li>
+          <li><strong>API key exposure</strong> — including unauthorized access to or misuse of your OpenRouter API key stored in your browser.</li>
+          <li><strong>AI generation errors</strong> — including inaccurate, misleading, or offensive content returned by AI models via OpenRouter.</li>
+          <li><strong>Service interruption</strong> — including downtime of the Netlify hosting or unavailability of third-party APIs.</li>
+          <li><strong>Financial loss</strong> — including unexpected charges from OpenRouter or any AI model provider arising from your API key usage.</li>
+        </ul>
+        <p>In no event shall VibeFlash's total cumulative liability to you exceed the amount you paid to use the Service, which is <strong>zero (£0 / $0)</strong>, as the Service is provided entirely free of charge.</p>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Section 7 -->
+    <section class="section" id="changes">
+      <span class="section-number">Section 07</span>
+      <h2 class="section-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-faint);flex-shrink:0;"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+        Changes to Terms
+      </h2>
+      <div class="section-body">
+        <p>We reserve the right to modify these Terms at any time. When we do, we will update the <strong>"Effective" date</strong> at the top of this page.</p>
+        <p>Because VibeFlash does not collect user accounts or email addresses, we cannot notify you directly of changes. It is your responsibility to review these Terms periodically. Your continued use of the Service after any changes are posted constitutes your acceptance of the updated Terms.</p>
+        <div class="info-card">
+          <div class="info-card-title">Current Version</div>
+          <p>These Terms were last updated on <strong>January 1, 2026</strong>. If you have been using VibeFlash prior to this date, please review all sections carefully as they may have changed.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Section 8 -->
+    <section class="section" id="contact">
+      <span class="section-number">Section 08</span>
+      <h2 class="section-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-faint);flex-shrink:0;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Contact
+      </h2>
+      <div class="section-body">
+        <p>If you have any questions, concerns, or feedback about these Terms, please reach out:</p>
+        <div class="info-card">
+          <div class="info-card-title">Get in Touch</div>
+          <p>
+            Email: <a href="mailto:hello@vibeflash.example"><strong>hello@vibeflash.example</strong></a><br />
+            We aim to respond within 5 business days. Note that since VibeFlash has no user accounts, we cannot assist with data recovery — all data is stored locally in your browser.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /page-wrapper -->
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-links">
+        <a href="/">Home</a>
+        <a href="app.html">App</a>
+        <a href="terms-of-use.html">Terms of Use</a>
+        <a href="privacy-policy.html">Privacy Policy</a>
+      </div>
+      <p class="footer-copy">
+        © 2026 YOUR_NAME_HERE. All rights reserved.
+        <span class="footer-dot"></span>
+        Static site, hosted on Netlify.
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // ── Theme ──────────────────────────────────────────────
+    const html   = document.documentElement;
+    const toggle = document.getElementById('theme-toggle');
+    const sun    = document.getElementById('icon-sun');
+    const moon   = document.getElementById('icon-moon');
+
+    function applyTheme(dark) {
+      html.classList.toggle('dark', dark);
+      sun.style.display  = dark ? 'block' : 'none';
+      moon.style.display = dark ? 'none'  : 'block';
+    }
+
+    // Init from localStorage, fall back to system
+    const stored = localStorage.getItem('vf-theme');
+    const sysDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    applyTheme(stored ? stored === 'dark' : sysDark);
+
+    toggle.addEventListener('click', () => {
+      const isDark = !html.classList.contains('dark');
+      localStorage.setItem('vf-theme', isDark ? 'dark' : 'light');
+      applyTheme(isDark);
+    });
+
+    // Listen for system changes (when no manual override)
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+      if (!localStorage.getItem('vf-theme')) applyTheme(e.matches);
+    });
+  </script>
+</body>
+</html>
