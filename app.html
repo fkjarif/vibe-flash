@@ -768,7 +768,7 @@
       <label class="form-label" for="api-key-input">API Key</label>
       <input class="form-input" id="api-key-input" type="password" placeholder="sk-or-..." autocomplete="off" />
     </div>
-    <p style="font-size:12px;color:var(--text-muted);margin-bottom:16px">Get a free key at <a href="https://openrouter.ai" target="_blank" style="color:var(--accent)">openrouter.ai</a>. The free model used is <code style="font-size:11px;background:var(--surface2);padding:1px 4px;border-radius:4px">google/gemini-2.0-flash-lite-preview-02-05:free</code>.</p>
+    <p style="font-size:12px;color:var(--text-muted);margin-bottom:16px">Get a free key at <a href="https://openrouter.ai" target="_blank" style="color:var(--accent)">openrouter.ai</a>. The free model used is <code style="font-size:11px;background:var(--surface2);padding:1px 4px;border-radius:4px">nvidia/nemotron-3-super-120b-a12b:free</code>.</p>
     <div style="display:flex;gap:8px;justify-content:flex-end">
       <button class="btn btn-ghost" data-close="api-modal">Cancel</button>
       <button class="btn btn-ghost btn-sm" id="clear-api-key-btn" style="margin-right:auto">Clear Key</button>
@@ -1283,7 +1283,7 @@ async function generateFlashcards() {
         'X-Title': 'VibeFlash'
       },
       body: JSON.stringify({
-        model: 'google/gemini-2.0-flash-lite-preview-02-05:free',
+        model: 'nvidia/nemotron-3-super-120b-a12b:free',
         messages: [{ role: 'user', content: prompt }],
         temperature: 0.7,
         max_tokens: 4000
