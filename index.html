@@ -5,7 +5,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="VibeFlash – Turn any PDF into flashcards instantly. Manual creation + AI generation. Your data stays in your browser. No signup, no server." />
   <meta name="keywords" content="flashcards, PDF, AI, study, BYOK, OpenRouter, browser, privacy" />
-  <title>VibeFlash – Turn Any PDF into Flashcards</title>
+  
+  <!-- Improved title for click‑through rate -->
+  <title>VibeFlash – Turn Any PDF into Flashcards Instantly (Free, No Signup)</title>
+
+  <!-- Open Graph / Social Media Meta Tags -->
+  <meta property="og:title" content="VibeFlash – Turn Any PDF into Flashcards Instantly" />
+  <meta property="og:description" content="Manual + AI flashcard generation. Your data stays in your browser. No signup, no server." />
+  <meta property="og:image" content="https://vibe-flash.netlify.app/og-image.png" />
+  <meta property="og:url" content="https://vibe-flash.netlify.app/" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="VibeFlash – Turn Any PDF into Flashcards Instantly" />
+  <meta name="twitter:description" content="Manual + AI flashcard generation. Your data stays in your browser. No signup, no server." />
+  <meta name="twitter:image" content="https://vibe-flash.netlify.app/og-image.png" />
+
+  <!-- Structured Data (JSON‑LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "VibeFlash",
+    "url": "https://vibe-flash.netlify.app/",
+    "description": "Turn any PDF into flashcards instantly. Manual + AI generation. No signup, no server, 100% browser-based.",
+    "applicationCategory": "EducationalApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "featureList": "PDF import, AI flashcard generation, manual card creation, dark mode, shuffle, progress tracking",
+    "browserRequirements": "Modern browser with IndexedDB support"
+  }
+  </script>
 
   <!-- Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -389,7 +422,7 @@
     <div class="animate-float absolute left-[5%] bottom-[25%] hidden xl:block pointer-events-none" style="animation-delay: -4s;">
       <div class="w-48 p-4 rounded-2xl glass dark:glass-dark shadow-2xl shadow-black/10 dark:shadow-white/5 -rotate-3">
         <div class="text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">🔮 AI Generated</div>
-        <div class="text-sm font-medium text-gray-800 dark:text-gray-100">Gemini Flash Lite</div>
+        <div class="text-sm font-medium text-gray-800 dark:text-gray-100">Nemotron 3 Super</div>
         <div class="mt-2 pt-2 border-t border-gray-200/60 dark:border-gray-700/50 text-xs text-gray-500 dark:text-gray-400">Free tier • OpenRouter</div>
       </div>
     </div>
@@ -584,7 +617,7 @@
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                 </svg>
               </div>
-              <span class="text-xs font-semibold text-gray-500 dark:text-gray-400">Gemini AI</span>
+              <span class="text-xs font-semibold text-gray-500 dark:text-gray-400">NVIDIA AI</span>
             </div>
             <!-- Middle: OpenRouter badge -->
             <div class="absolute top-[15%] left-1/2 -translate-x-1/2">
@@ -996,7 +1029,7 @@
     const sampleCards = [
       { front: "What is a smart contract?",       back: "Self-executing contract with terms directly written in code." },
       { front: "What does 'BYOK' stand for?",     back: "Bring Your Own Key – user provides their own API key." },
-      { front: "Which free AI model is used?",    back: "Gemini Flash Lite via OpenRouter (free tier)." },
+      { front: "Which free AI model is used?",    back: "NVIDIA Nemotron 3 Super via OpenRouter (free tier)." },
       { front: "Where are flashcards stored?",    back: "IndexedDB in your browser – no server." },
       { front: "Can I edit a card later?",        back: "Yes, full edit/delete support." },
     ];
