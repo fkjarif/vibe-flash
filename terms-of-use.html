@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="VibeFlash Privacy Policy – learn how VibeFlash handles (or rather, doesn't handle) your data." />
-  <title>Privacy Policy – VibeFlash</title>
+  <meta name="description" content="VibeFlash Terms of Use – understand your rights and responsibilities when using the VibeFlash flashcard app." />
+  <title>Terms of Use – VibeFlash</title>
 
   <!-- Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -29,12 +29,9 @@
       --grad-via:     #D1D5DB;
       --tag-bg:       #F3F4F6;
       --tag-text:     #374151;
-      --green-bg:     #F0FDF4;
-      --green-border: #BBF7D0;
-      --green-text:   #166534;
-      --blue-bg:      #EFF6FF;
-      --blue-border:  #BFDBFE;
-      --blue-text:    #1E40AF;
+      --warn-bg:      #FFFBEB;
+      --warn-border:  #FDE68A;
+      --warn-text:    #92400E;
     }
     html.dark {
       --bg:           #0A0A0A;
@@ -51,12 +48,9 @@
       --grad-via:     #374151;
       --tag-bg:       #1F2937;
       --tag-text:     #D1D5DB;
-      --green-bg:     #022C22;
-      --green-border: #064E3B;
-      --green-text:   #6EE7B7;
-      --blue-bg:      #0C1A2E;
-      --blue-border:  #1E3A5F;
-      --blue-text:    #93C5FD;
+      --warn-bg:      #1C1400;
+      --warn-border:  #78350F;
+      --warn-text:    #FCD34D;
     }
 
     /* ── Reset & Base ────────────────────────────── */
@@ -182,43 +176,10 @@
       padding: 3rem 1.5rem 4rem;
     }
 
-    /* ── Hero / Privacy Summary Card ─────────────── */
-    .summary-card {
-      background: var(--green-bg);
-      border: 1px solid var(--green-border);
-      border-radius: 20px;
-      padding: 1.5rem 1.75rem;
-      margin-bottom: 2.5rem;
-      display: flex;
-      gap: 1rem;
-      align-items: flex-start;
-    }
-    .summary-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
-      background: var(--green-border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
-    .summary-content h2 {
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: var(--green-text);
-      margin-bottom: 0.4rem;
-    }
-    .summary-content p {
-      font-size: 0.83rem;
-      color: var(--green-text);
-      line-height: 1.7;
-      opacity: 0.85;
-    }
-
     /* ── Page header ─────────────────────────────── */
-    .page-header { margin-bottom: 2.5rem; }
+    .page-header {
+      margin-bottom: 2.5rem;
+    }
 
     .page-eyebrow {
       display: inline-flex;
@@ -361,50 +322,25 @@
     }
     .section-body li { font-size: 0.88rem; line-height: 1.7; }
 
-    /* ── Flow diagram (data stays local) ────────── */
-    .data-flow {
-      display: flex;
-      align-items: center;
-      gap: 0;
-      margin: 1.25rem 0;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-    .data-node {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.3rem;
-      padding: 0.75rem 1rem;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
+    /* ── Warning box ─────────────────────────────── */
+    .warn-box {
+      background: var(--warn-bg);
+      border: 1px solid var(--warn-border);
       border-radius: 14px;
-      flex: 1;
-      min-width: 100px;
-      text-align: center;
-    }
-    .data-node-icon {
-      width: 32px;
-      height: 32px;
+      padding: 1rem 1.25rem;
+      margin: 1rem 0;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--text-muted);
+      gap: 0.75rem;
+      align-items: flex-start;
     }
-    .data-node-label {
-      font-size: 0.72rem;
-      font-weight: 600;
-      color: var(--text);
+    .warn-icon { flex-shrink: 0; margin-top: 2px; }
+    .warn-box p {
+      font-size: 0.83rem;
+      line-height: 1.7;
+      color: var(--warn-text) !important;
+      margin: 0 !important;
     }
-    .data-node-sub {
-      font-size: 0.65rem;
-      color: var(--text-faint);
-    }
-    .data-arrow {
-      color: var(--text-faint);
-      font-size: 1.1rem;
-      flex-shrink: 0;
-    }
+    .warn-box strong { color: var(--warn-text) !important; }
 
     /* ── Info card ───────────────────────────────── */
     .info-card {
@@ -429,57 +365,20 @@
       margin: 0;
     }
 
-    /* ── Blue info box ───────────────────────────── */
-    .info-box {
-      background: var(--blue-bg);
-      border: 1px solid var(--blue-border);
-      border-radius: 14px;
-      padding: 1rem 1.25rem;
-      margin: 1rem 0;
-      display: flex;
-      gap: 0.75rem;
-      align-items: flex-start;
-    }
-    .info-box-icon { flex-shrink: 0; margin-top: 2px; }
-    .info-box p {
-      font-size: 0.83rem;
-      line-height: 1.7;
-      color: var(--blue-text) !important;
-      margin: 0 !important;
-    }
-    .info-box strong { color: var(--blue-text) !important; }
-
-    /* ── Checklist ───────────────────────────────── */
-    .checklist {
-      list-style: none !important;
-      padding-left: 0 !important;
-    }
-    .checklist li {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.6rem;
-      padding: 0.5rem 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .checklist li:last-child { border-bottom: none; }
-    .check-icon {
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      background: var(--green-bg);
-      border: 1px solid var(--green-border);
-      display: flex;
+    /* ── Tag / badge ─────────────────────────────── */
+    .tag {
+      display: inline-flex;
       align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      margin-top: 2px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      background: var(--tag-bg);
+      color: var(--tag-text);
+      border: 1px solid var(--border);
+      vertical-align: middle;
     }
-    .check-label {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
-    .check-label strong { color: var(--text); font-weight: 600; }
 
     /* ── Footer ──────────────────────────────────── */
     footer {
@@ -527,9 +426,7 @@
       .page-title { font-size: 1.55rem; }
       .page-wrapper { padding: 2rem 1rem 3rem; }
       nav { padding: 0 1rem; }
-      .summary-card { flex-direction: column; }
-      .data-flow { flex-direction: column; }
-      .data-arrow { transform: rotate(90deg); }
+      .nav-link span { display: none; }
     }
   </style>
 </head>
@@ -549,8 +446,8 @@
     <div class="nav-links">
       <a href="/" class="nav-link">Home</a>
       <a href="app.html" class="nav-link">App</a>
-      <a href="terms-of-use.html" class="nav-link">Terms</a>
-      <a href="privacy-policy.html" class="nav-link active">Privacy</a>
+      <a href="terms-of-use.html" class="nav-link active">Terms</a>
+      <a href="privacy-policy.html" class="nav-link">Privacy</a>
     </div>
     <div class="nav-right">
       <button id="theme-toggle" aria-label="Toggle dark mode">
@@ -573,34 +470,21 @@
     <!-- Header -->
     <header class="page-header">
       <div class="page-eyebrow">Legal</div>
-      <h1 class="page-title">Privacy Policy</h1>
+      <h1 class="page-title">Terms of Use</h1>
       <div class="page-meta">
         <span>
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          Effective: January 1, 2026
+          Effective: May 21, 2026
         </span>
         <span>
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          ~4 min read
+          ~5 min read
         </span>
         <span>
-          <a href="terms-of-use.html" style="font-size:0.82rem; color: var(--text-faint);">Also see: Terms of Use →</a>
+          <a href="privacy-policy.html" style="font-size:0.82rem; color: var(--text-faint);">Also see: Privacy Policy →</a>
         </span>
       </div>
     </header>
-
-    <!-- Privacy summary card -->
-    <div class="summary-card">
-      <div class="summary-icon">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--green-text);">
-          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-        </svg>
-      </div>
-      <div class="summary-content">
-        <h2>The short version: we collect nothing.</h2>
-        <p>VibeFlash has no backend, no analytics, no cookies, and no user accounts. Everything stays in your browser. We literally cannot see your data because it never reaches us. This policy explains the technical specifics of how that works.</p>
-      </div>
-    </div>
 
     <div class="divider"></div>
 
@@ -608,211 +492,182 @@
     <div class="toc">
       <div class="toc-title">Table of Contents</div>
       <ol>
-        <li><a href="#no-collection">No Data Collection</a></li>
-        <li><a href="#local-storage">Local Storage (IndexedDB)</a></li>
-        <li><a href="#third-party">Third-Party API (OpenRouter)</a></li>
-        <li><a href="#no-personal-info">No Personal Information</a></li>
-        <li><a href="#childrens">Children's Privacy</a></li>
-        <li><a href="#changes">Changes to Policy</a></li>
+        <li><a href="#acceptance">Acceptance of Terms</a></li>
+        <li><a href="#description">Description of Service</a></li>
+        <li><a href="#byok">Bring Your Own API Key (BYOK)</a></li>
+        <li><a href="#responsibilities">User Responsibilities</a></li>
+        <li><a href="#warranties">No Warranties</a></li>
+        <li><a href="#liability">Limitation of Liability</a></li>
+        <li><a href="#changes">Changes to Terms</a></li>
         <li><a href="#contact">Contact</a></li>
       </ol>
     </div>
 
     <!-- Section 1 -->
-    <section class="section" id="no-collection">
+    <section class="section" id="acceptance">
       <span class="section-number">Section 01</span>
       <h2 class="section-title">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-faint);flex-shrink:0;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        No Data Collection
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-faint);flex-shrink:0;"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        Acceptance of Terms
       </h2>
       <div class="section-body">
-        <p>VibeFlash does not collect, transmit, store, or process any of your data on our servers — because <strong>we don't have any servers</strong> that receive user data.</p>
-
-        <ul class="checklist">
-          <li>
-            <span class="check-icon">
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="color:var(--green-text);"><polyline points="20 6 9 17 4 12"/></svg>
-            </span>
-            <span class="check-label"><strong>No cookies.</strong> We do not set any first-party or third-party cookies.</span>
-          </li>
-          <li>
-            <span class="check-icon">
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="color:var(--green-text);"><polyline points="20 6 9 17 4 12"/></svg>
-            </span>
-            <span class="check-label"><strong>No analytics.</strong> We do not use Google Analytics, Mixpanel, Plausible, or any other analytics service.</span>
-          </li>
-          <li>
-            <span class="check-icon">
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="color:var(--green-text);"><polyline points="20 6 9 17 4 12"/></svg>
-            </span>
-            <span class="check-label"><strong>No server-side logs of user activity.</strong> Netlify may log standard HTTP access data (IP addresses, timestamps) as part of its hosting infrastructure — this is governed by <a href="https://www.netlify.com/privacy/" target="_blank" rel="noopener noreferrer">Netlify's Privacy Policy</a>.</span>
-          </li>
-          <li>
-            <span class="check-icon">
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="color:var(--green-text);"><polyline points="20 6 9 17 4 12"/></svg>
-            </span>
-            <span class="check-label"><strong>No tracking pixels or fingerprinting.</strong> We do not embed any invisible tracking technology.</span>
-          </li>
-          <li>
-            <span class="check-icon">
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="color:var(--green-text);"><polyline points="20 6 9 17 4 12"/></svg>
-            </span>
-            <span class="check-label"><strong>No advertising.</strong> VibeFlash displays no ads and shares no data with ad networks.</span>
-          </li>
-        </ul>
+        <p>By accessing or using <strong>VibeFlash</strong> (the "Service"), you agree to be bound by these Terms of Use ("Terms"). Please read them carefully before using the app.</p>
+        <p>If you do not agree with any part of these Terms, you must discontinue use of the Service immediately. Your continued use of VibeFlash constitutes acceptance of these Terms, including any future updates.</p>
+        <p>These Terms apply to all visitors, users, and anyone who accesses or uses the Service.</p>
       </div>
     </section>
 
     <div class="divider"></div>
 
     <!-- Section 2 -->
-    <section class="section" id="local-storage">
+    <section class="section" id="description">
       <span class="section-number">Section 02</span>
       <h2 class="section-title">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-faint);flex-shrink:0;"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-        Local Storage (IndexedDB)
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-faint);flex-shrink:0;"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        Description of Service
       </h2>
       <div class="section-body">
-        <p>All data created within VibeFlash is stored exclusively in your browser using the <strong>IndexedDB</strong> Web API — a structured local database built into every modern browser.</p>
-        <p>The following data is stored locally in your browser and <strong>nowhere else</strong>:</p>
+        <p>VibeFlash is a <strong>static, browser-based flashcard application</strong>. It allows users to create flashcard decks manually, import text from PDF files (processed locally via PDF.js), and optionally use AI models via the OpenRouter API to generate flashcards automatically.</p>
+        <p>Key technical characteristics of the Service:</p>
         <ul>
-          <li><strong>Flashcard decks</strong> — names and creation timestamps</li>
-          <li><strong>Flashcards</strong> — front text (question), back text (answer), ordering</li>
-          <li><strong>OpenRouter API key</strong> — if you choose to use AI generation (see Section 3)</li>
-          <li><strong>App preferences</strong> — such as your preferred color theme (dark/light mode), stored via <code style="font-family:monospace;font-size:0.82em;background:var(--bg-subtle);padding:1px 5px;border-radius:5px;">localStorage</code></li>
+          <li><strong>No backend server.</strong> VibeFlash does not have a server-side component. There are no databases, user accounts, or authentication systems owned or operated by VibeFlash.</li>
+          <li><strong>Client-side only.</strong> All flashcard data — including your decks, cards, and any stored API key — lives exclusively in your browser's <strong>IndexedDB</strong> local storage. It never leaves your device unless you explicitly trigger an AI generation request (see Section 3).</li>
+          <li><strong>PDF processing is local.</strong> When you upload a PDF, all text extraction occurs in your browser using PDF.js. No file is transmitted to any VibeFlash server.</li>
+          <li><strong>Statically hosted.</strong> The app is deployed as a static site on Netlify, meaning the files you receive are pre-built HTML, CSS, and JavaScript — there is no server processing your requests.</li>
         </ul>
-
-        <div class="data-flow">
-          <div class="data-node">
-            <div class="data-node-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-            </div>
-            <div class="data-node-label">Your Browser</div>
-            <div class="data-node-sub">All data lives here</div>
-          </div>
-          <div class="data-arrow">→</div>
-          <div class="data-node">
-            <div class="data-node-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
-            </div>
-            <div class="data-node-label">IndexedDB</div>
-            <div class="data-node-sub">Decks, cards, key</div>
-          </div>
-          <div class="data-arrow">✕</div>
-          <div class="data-node" style="opacity:0.45; border-style: dashed;">
-            <div class="data-node-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
-            </div>
-            <div class="data-node-label">VibeFlash Server</div>
-            <div class="data-node-sub">Does not exist</div>
-          </div>
-        </div>
-
-        <p><strong>Important:</strong> Because data is stored locally, it is tied to the specific browser and device you are using. Clearing your browser's site data, or using a different browser or device, will result in the loss of your locally stored flashcards. We strongly encourage you to periodically export or copy important content.</p>
+        <p>The Service is provided free of charge and may be modified, updated, or discontinued at any time without prior notice.</p>
       </div>
     </section>
 
     <div class="divider"></div>
 
     <!-- Section 3 -->
-    <section class="section" id="third-party">
+    <section class="section" id="byok">
       <span class="section-number">Section 03</span>
       <h2 class="section-title">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-faint);flex-shrink:0;"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        Third-Party API (OpenRouter)
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-faint);flex-shrink:0;"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+        Bring Your Own API Key (BYOK)
       </h2>
       <div class="section-body">
-        <p>The AI flashcard generation feature is entirely optional. If you choose to use it, here is exactly what happens:</p>
-        <ol>
-          <li>You supply your own OpenRouter API key, which is saved to your browser's IndexedDB.</li>
-          <li>When you click "Generate Flashcards," your browser makes a direct HTTPS request <strong>from your device to OpenRouter's API endpoint</strong> (<code style="font-family:monospace;font-size:0.82em;background:var(--bg-subtle);padding:1px 5px;border-radius:5px;">api.openrouter.ai</code>), including a portion of your extracted PDF text and your API key.</li>
-          <li>OpenRouter processes the request using the AI model you selected and returns the generated flashcards.</li>
-          <li>VibeFlash stores the returned flashcards in your browser's IndexedDB.</li>
-        </ol>
+        <p>The AI-powered flashcard generation feature requires you to supply your own API key from <strong>OpenRouter</strong> (<a href="https://openrouter.ai" target="_blank" rel="noopener noreferrer">openrouter.ai</a>). VibeFlash does not provide, proxy, or subsidize access to any AI model.</p>
 
-        <div class="info-box">
-          <svg class="info-box-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--blue-text);"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-          <p><strong>We never see it.</strong> The creator of VibeFlash does not receive, log, intercept, or store any data from your OpenRouter API calls — not your API key, not your PDF text, not the AI response. The request goes directly from your browser to OpenRouter.</p>
+        <p>By using the BYOK feature, you acknowledge and agree to the following:</p>
+        <ul>
+          <li><strong>Key storage.</strong> Your API key is stored locally in your browser's IndexedDB. It is not transmitted to, seen by, or stored on any VibeFlash server.</li>
+          <li><strong>Direct API calls.</strong> When you initiate AI generation, your browser makes a direct HTTP request to <code style="font-family:monospace;font-size:0.82em;background:var(--bg-subtle);padding:1px 5px;border-radius:5px;">https://openrouter.ai/api/v1/</code>. VibeFlash's servers are not involved in this transaction.</li>
+          <li><strong>Your responsibility for costs.</strong> You are solely responsible for all API usage costs incurred under your OpenRouter account. VibeFlash has no visibility into your usage and will not reimburse any charges.</li>
+          <li><strong>Your responsibility for security.</strong> You are solely responsible for keeping your API key confidential. Use a key with appropriate rate limits and credit caps. Revoke keys you no longer use at <a href="https://openrouter.ai/keys" target="_blank" rel="noopener noreferrer">openrouter.ai/keys</a>.</li>
+          <li><strong>OpenRouter's terms apply.</strong> Your use of the OpenRouter API is also governed by <a href="https://openrouter.ai/terms" target="_blank" rel="noopener noreferrer">OpenRouter's own Terms of Service</a>.</li>
+        </ul>
+
+        <div class="warn-box">
+          <svg class="warn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--warn-text);"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <p><strong>Security Warning:</strong> Because VibeFlash is a client-side app, anyone with access to your device and browser DevTools (e.g., the Application → IndexedDB panel) can potentially read your stored API key. <strong>Never use a high-credit, unrestricted API key.</strong> Always use a key configured with spending limits. VibeFlash is not liable for unauthorized use of your API key.</p>
         </div>
-
-        <p>By using the AI generation feature, you agree to <a href="https://openrouter.ai/terms" target="_blank" rel="noopener noreferrer">OpenRouter's Terms of Service</a> and <a href="https://openrouter.ai/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>, which govern how they handle data sent to their API. Please review those documents to understand how OpenRouter processes your information.</p>
       </div>
     </section>
 
     <div class="divider"></div>
 
     <!-- Section 4 -->
-    <section class="section" id="no-personal-info">
+    <section class="section" id="responsibilities">
       <span class="section-number">Section 04</span>
       <h2 class="section-title">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-faint);flex-shrink:0;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        No Personal Information
+        User Responsibilities
       </h2>
       <div class="section-body">
-        <p>VibeFlash does not ask for, require, or store any personally identifiable information (PII). Specifically:</p>
+        <p>As a user of VibeFlash, you agree that you will:</p>
         <ul>
-          <li><strong>No name.</strong> We do not ask for your name anywhere in the app.</li>
-          <li><strong>No email address.</strong> There is no registration, sign-up, or mailing list.</li>
-          <li><strong>No phone number.</strong> Not required or collected.</li>
-          <li><strong>No payment information.</strong> VibeFlash is free. We do not process payments.</li>
-          <li><strong>No location data.</strong> We do not request or access your geographic location.</li>
-          <li><strong>No device fingerprinting.</strong> We do not collect browser version, screen resolution, hardware identifiers, or similar data for tracking purposes.</li>
+          <li>Use the Service only for lawful purposes and in accordance with these Terms.</li>
+          <li>Not upload, input, or process any content that is illegal, infringing, harmful, or that violates any third-party rights.</li>
+          <li>Not attempt to reverse-engineer, decompile, or tamper with the Service in ways that would harm other users or circumvent security measures.</li>
+          <li>Take full responsibility for any content you create using the Service, including AI-generated flashcards. AI outputs may be inaccurate — always verify important information.</li>
+          <li>Comply with the terms of any third-party services you connect to VibeFlash (e.g., OpenRouter).</li>
+          <li>Not use the Service to store, process, or transmit sensitive personal data such as passwords, payment information, or government identifiers.</li>
         </ul>
-        <p>The only data in the system is what <strong>you explicitly create</strong>: your flashcard content. And it lives only on your device.</p>
+        <p>Since all data is stored in your browser, <strong>you are solely responsible for backing up your flashcard data</strong>. Clearing your browser's site data will permanently delete all decks and cards.</p>
       </div>
     </section>
 
     <div class="divider"></div>
 
     <!-- Section 5 -->
-    <section class="section" id="childrens">
+    <section class="section" id="warranties">
       <span class="section-number">Section 05</span>
       <h2 class="section-title">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-faint);flex-shrink:0;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        Children's Privacy
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-faint);flex-shrink:0;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        No Warranties
       </h2>
       <div class="section-body">
-        <p>VibeFlash is a general-purpose study tool suitable for users of all ages. Because we collect no personal information from anyone, we do not knowingly collect personal information from children under the age of 13 (or the applicable minimum age in your jurisdiction).</p>
-        <p>If you are a parent or guardian and believe your child has somehow shared personal data through VibeFlash, please be aware that VibeFlash has no mechanism to receive such data — all content remains local to the browser. There is no information for us to delete from our systems, because none exists on our end.</p>
-        <p>If you have concerns, feel free to contact us at the address in Section 7, and we will clarify any aspect of how the app works.</p>
+        <p>VibeFlash is provided <strong>"as is"</strong> and <strong>"as available"</strong> without warranty of any kind, express or implied, including but not limited to:</p>
+        <ul>
+          <li>Warranties of merchantability, fitness for a particular purpose, or non-infringement.</li>
+          <li>Any warranty that the Service will be uninterrupted, error-free, or free of viruses or other harmful components.</li>
+          <li>Any warranty regarding the accuracy, completeness, or reliability of AI-generated flashcard content.</li>
+          <li>Any guarantee that your locally stored data (IndexedDB) will persist indefinitely. Browser updates, storage limits, or user actions (clearing site data) may result in data loss.</li>
+        </ul>
+        <p>You use VibeFlash entirely at your own risk. We strongly recommend periodically exporting or copying important study material.</p>
       </div>
     </section>
 
     <div class="divider"></div>
 
     <!-- Section 6 -->
-    <section class="section" id="changes">
+    <section class="section" id="liability">
       <span class="section-number">Section 06</span>
       <h2 class="section-title">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-faint);flex-shrink:0;"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
-        Changes to Policy
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-faint);flex-shrink:0;"><path d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+        Limitation of Liability
       </h2>
       <div class="section-body">
-        <p>We reserve the right to update this Privacy Policy at any time to reflect changes in the app's functionality, legal requirements, or third-party services we rely on (e.g., Netlify's hosting). When changes occur, we will update the <strong>"Effective" date</strong> at the top of this page.</p>
-        <p>Since we do not collect email addresses, we cannot notify you of changes directly. We encourage you to review this page periodically. Continued use of VibeFlash after changes are posted constitutes your acceptance of the updated policy.</p>
-        <div class="info-card">
-          <div class="info-card-title">Current Version</div>
-          <p>This Privacy Policy was last updated on <strong>May 21, 2026</strong>. Previous versions are not archived publicly, but you can always <a href="#contact">contact us</a> if you have questions about historical practices.</p>
-        </div>
+        <p>To the fullest extent permitted by applicable law, the creator of VibeFlash shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including but not limited to:</p>
+        <ul>
+          <li><strong>Data loss</strong> — including loss of flashcard decks, cards, or settings caused by browser clearing, storage limits, app updates, or any other reason.</li>
+          <li><strong>API key exposure</strong> — including unauthorized access to or misuse of your OpenRouter API key stored in your browser.</li>
+          <li><strong>AI generation errors</strong> — including inaccurate, misleading, or offensive content returned by AI models via OpenRouter.</li>
+          <li><strong>Service interruption</strong> — including downtime of the Netlify hosting or unavailability of third-party APIs.</li>
+          <li><strong>Financial loss</strong> — including unexpected charges from OpenRouter or any AI model provider arising from your API key usage.</li>
+        </ul>
+        <p>In no event shall VibeFlash's total cumulative liability to you exceed the amount you paid to use the Service, which is <strong>zero (£0 / $0)</strong>, as the Service is provided entirely free of charge.</p>
       </div>
     </section>
 
     <div class="divider"></div>
 
     <!-- Section 7 -->
-    <section class="section" id="contact">
+    <section class="section" id="changes">
       <span class="section-number">Section 07</span>
+      <h2 class="section-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-faint);flex-shrink:0;"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+        Changes to Terms
+      </h2>
+      <div class="section-body">
+        <p>We reserve the right to modify these Terms at any time. When we do, we will update the <strong>"Effective" date</strong> at the top of this page.</p>
+        <p>Because VibeFlash does not collect user accounts or email addresses, we cannot notify you directly of changes. It is your responsibility to review these Terms periodically. Your continued use of the Service after any changes are posted constitutes your acceptance of the updated Terms.</p>
+        <div class="info-card">
+          <div class="info-card-title">Current Version</div>
+          <p>These Terms were last updated on <strong>January 1, 2026</strong>. If you have been using VibeFlash prior to this date, please review all sections carefully as they may have changed.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Section 8 -->
+    <section class="section" id="contact">
+      <span class="section-number">Section 08</span>
       <h2 class="section-title">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-faint);flex-shrink:0;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
         Contact
       </h2>
       <div class="section-body">
-        <p>If you have any questions about this Privacy Policy or how VibeFlash handles data, please don't hesitate to reach out. We're happy to explain the technical architecture in more detail.</p>
+        <p>If you have any questions, concerns, or feedback about these Terms, please reach out:</p>
         <div class="info-card">
           <div class="info-card-title">Get in Touch</div>
           <p>
-            Email: <a href="mailto:fk.jarif@gmail.com"><strong>fk.jarif@gmail.com</strong></a><br />
-            We aim to respond within 5 business days. Since VibeFlash stores no user data on our end, we cannot assist with data recovery from your browser's local storage — that data is controlled entirely by you.
+            Email: <a href="mailto:hello@vibeflash.example"><strong>hello@vibeflash.example</strong></a><br />
+            We aim to respond within 5 business days. Note that since VibeFlash has no user accounts, we cannot assist with data recovery — all data is stored locally in your browser.
           </p>
         </div>
       </div>
@@ -830,7 +685,7 @@
         <a href="privacy-policy.html">Privacy Policy</a>
       </div>
       <p class="footer-copy">
-        © 2026 Faizul Karim Jarif. All rights reserved.
+        © 2026 YOUR_NAME_HERE. All rights reserved.
         <span class="footer-dot"></span>
         Static site, hosted on Netlify.
       </p>
@@ -850,7 +705,8 @@
       moon.style.display = dark ? 'none'  : 'block';
     }
 
-    const stored  = localStorage.getItem('vf-theme');
+    // Init from localStorage, fall back to system
+    const stored = localStorage.getItem('vf-theme');
     const sysDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     applyTheme(stored ? stored === 'dark' : sysDark);
 
@@ -860,6 +716,7 @@
       applyTheme(isDark);
     });
 
+    // Listen for system changes (when no manual override)
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
       if (!localStorage.getItem('vf-theme')) applyTheme(e.matches);
     });
